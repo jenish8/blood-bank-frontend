@@ -10,7 +10,7 @@ const Register = () => {
   return  <div style={{backgroundColor:"#f2f2f2", minHeight:"100vh"}}>
   <div className="container">
       <div className="row justify-content-center my-4">
-          <div className="col-md-7 col-lg-5 shadow p-3" style={{backgroundColor:"white"}}>
+          <div className="col-md-7 col-lg-5 shadow p-3" style={{backgroundColor:"pink"}}>
           <div className="rounded w-100"
                             style={{ backgroundImage: `url(${bloodcover})`, height: "300px", backgroundSize: "100%", backgroundRepeat: "no-repeat" }}>
                         </div>

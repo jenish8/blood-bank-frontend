@@ -7,7 +7,8 @@ import Footer from './components/Footer';
 import Register from './components/Register'
 import Appointment from './components/Appointment';
 
-import { BrowserRouter, Route, Routes, Redirect, Navigate } from "react-router-dom";
+import { BrowserRouter, Route, Routes, Redirect,Navigate } from "react-router-dom";
+// import { injectStyle } from "react-toastify/dist/inject-style";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./assets/css/animate.min.css";
@@ -26,7 +27,12 @@ import TransactionLayout from "./views/Transaction.js";
 import BloodBottlesLayout from "./views/BloodBottles.js";
 import PrerequesitesLayout from "./views/Prerequesites.js";
 import RecipientLayout from "./views/Recipient";
+import D_Register from './components/D_Register';
 
+// if (typeof window !== "undefined") {
+// 	injectStyle();
+//   }
+  
 
 class App extends React.Component {
 
@@ -39,11 +45,15 @@ class App extends React.Component {
 	}
 
 	render() {
+		// function notify(msg) {
+		// 	toast(msg);
+		//   }
 		return (
 
 			<BrowserRouter>
 				<Routes>
-					<Route path='/register' element={<Register />} />
+					<Route path='/register' element={<Register/>} />
+					<Route path='/donor/register' element={<D_Register/>} />
 					<Route path='/appointment' element={<Appointment />} />
 					<Route path='/' element={
 						<>

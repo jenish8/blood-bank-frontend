@@ -3,7 +3,11 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+<<<<<<< HEAD
+    "@mui/styles": "^5.8.7",
+=======
     "@fortawesome/fontawesome-free": "^6.1.1",
+>>>>>>> 0750302b5a1999f47ed35450d70dd9ff43498474
     "@testing-library/jest-dom": "^5.16.4",
     "@testing-library/react": "^13.3.0",
     "@testing-library/user-event": "^13.5.0",

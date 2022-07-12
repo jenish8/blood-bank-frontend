@@ -5,6 +5,7 @@ import Menu from './components/menu';
 import { PLACES } from './shared/places';
 import Footer from './components/Footer';
 import Register from './components/Register'
+import Appointment from './components/Appointment';
 
 import { BrowserRouter, Route, Routes, Redirect,Navigate } from "react-router-dom";
 
@@ -43,9 +44,23 @@ class App extends React.Component {
 			<BrowserRouter>
 				<Routes>
 					<Route path='/register' element={<Register />} />
+					<Route path='/appointment' element={<Appointment />} />
 					<Route path='/' element={
 						<>
 							<div className='App'>
+<<<<<<< HEAD
+						<Navbar color="primary"></Navbar>
+						<div className="container" id="brand">
+						<NavbarBrand>Daiict Blood bank</NavbarBrand>
+						</div>
+						
+					<h1>Blood Bank Management System</h1>
+					<Menu places={this.state.places}>
+         	 </Menu>
+			  <Footer/>
+   
+   			</div>
+=======
 								<Navbar color="primary"></Navbar>
 								<div className="container" id="brand">
 									<NavbarBrand>Daiict Blood bank</NavbarBrand>
@@ -56,6 +71,7 @@ class App extends React.Component {
 								<Footer />
 
 							</div>
+>>>>>>> 0750302b5a1999f47ed35450d70dd9ff43498474
 						</>
 					} />
 				</Routes>

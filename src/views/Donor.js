@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useLocation, Route, Routes } from "react-router-dom";
 
 import AdminNavbar from "../components/Admin/Navbars/AdminNavbar";
@@ -28,7 +28,20 @@ function Donor() {
   const [hasImage, setHasImage] = React.useState(true);
   const location = useLocation();
   const mainPanel = React.useRef(null);
+  
+  const [userList, setUserList] = useState([])
+  var row_count = 0;
+
+  async function fetchData() {
+    await fetch("http://localhost:4000/user/donor-all")
+      .then((res) => res.json())
+      .then((result) => {
+        setUserList(result);
+      })
+  }
+
   React.useEffect(() => {
+    fetchData();
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
     mainPanel.current.scrollTop = 0;
@@ -67,20 +80,24 @@ function Donor() {
                         <thead>
                           <tr>
                             <th className="border-0">Aadhar_No</th>
-                            <th className="border-0">Name</th>
+                            <th className="border-0">UserName</th>
                             <th className="border-0">Blood Group</th>
                             <th className="border-0">Gender</th>
                             <th className="border-0">Date Of Birth</th>
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                            <td>1</td>
-                            <td>Dakota Rice</td>
-                            <td>$36,738</td>
-                            <td>Niger</td>
-                            <td>Oud-Turnhout</td>
-                          </tr>
+                        {userList && userList.map(row => {
+                            return (
+                              <tr key={row_count}>
+                                <td>{row.aadharNumber}</td>                                                
+                                <td>{row.username}</td>
+                                <td>{row.bloodGroup}</td>
+                                <td>{row.gender}</td>
+                                <td>{row.dateOfBirth}</td>
+                              </tr>
+                            );
+                          })}
                         </tbody>
                       </Table>
                     </Card.Body>

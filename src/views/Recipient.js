@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useLocation, Route, Routes } from "react-router-dom";
 
 import AdminNavbar from "../components/Admin/Navbars/AdminNavbar";
@@ -28,7 +28,20 @@ function Recipient() {
   const [hasImage, setHasImage] = React.useState(true);
   const location = useLocation();
   const mainPanel = React.useRef(null);
+
+  const [userList, setUserList] = useState([])
+  var row_count = 0;
+
+  async function fetchData() {
+    await fetch("http://localhost:4000/user/recipient-all")
+      .then((res) => res.json())
+      .then((result) => {
+        setUserList(result);
+      })
+  }
+
   React.useEffect(() => {
+    fetchData();
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
     mainPanel.current.scrollTop = 0;
@@ -61,8 +74,7 @@ function Recipient() {
                       <Table className="table-hover">
                         <thead>
                           <tr>
-                            <th className="border-0">Aadhar_No</th>
-                            <th className="border-0">Name</th>
+                            <th className="border-0">username</th>
                             <th className="border-0">Blood Group</th>
                             <th className="border-0">Quantity</th>
                             <th className="border-0">Requested Date</th>
@@ -72,17 +84,21 @@ function Recipient() {
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                            <td>1</td>
-                            <td>Dakota Rice</td>
-                            <td>$36,738</td>
-                            <td>Niger</td>
-                            <td>$36,738</td>
-                            <td>Niger</td>
-                            <td><button type="button" class="btn btn-success">Accept</button></td>
-                            <td><button type="button" class="btn btn-danger">Reject</button></td>
-                          </tr>
-                          </tbody>
+                          {userList && userList.map(row => {
+                            return (
+                              <tr key={row_count}>
+                                <td>{row.username}</td>
+                                <td>{row.bloodGroup}</td>
+                                <td>{row.quantity}</td>
+                                <td>{row.requestedDate}</td>
+                                <td>{row.supplyDate}</td>
+                                <td><button type="button" class="btn btn-success">Accept</button></td>
+                                <td><button type="button" class="btn btn-danger">Reject</button></td>
+                              </tr>
+                            );
+                          })}
+
+                        </tbody>
                       </Table>
                     </Card.Body>
                   </Card>

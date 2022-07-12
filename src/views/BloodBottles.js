@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useLocation, Route, Routes } from "react-router-dom";
 
 import AdminNavbar from "../components/Admin/Navbars/AdminNavbar";
@@ -28,7 +28,20 @@ function BloodBottles() {
   const [hasImage, setHasImage] = React.useState(true);
   const location = useLocation();
   const mainPanel = React.useRef(null);
+
+  const [userList, setUserList] = useState([])
+  var row_count = 0;
+
+  async function fetchData() {
+    await fetch("http://localhost:4000/bloodBottle/all")
+      .then((res) => res.json())
+      .then((result) => {
+        setUserList(result);
+      })
+  }
+
   React.useEffect(() => {
+    fetchData();
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
     mainPanel.current.scrollTop = 0;
@@ -73,12 +86,16 @@ function BloodBottles() {
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                            <td>1</td>
-                            <td>Dakota Rice</td>
-                            <td>$36,738</td>
-                            <td>Niger</td>
-                          </tr>
+                        {userList && userList.map(row => {
+                            return (
+                              <tr key={row_count}>
+                                <td>{row._id}</td>                                                
+                                <td>{row.bloodGroup}</td>
+                                <td>{`${row.isExpired}`}</td>
+                                <td>{`${row.recipientId}`}</td>
+                              </tr>
+                            );
+                          })}
                         </tbody>
                       </Table>
                     </Card.Body>

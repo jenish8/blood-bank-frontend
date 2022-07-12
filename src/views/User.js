@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { useLocation, Route, Routes } from "react-router-dom";
 
 import AdminNavbar from "../components/Admin/Navbars/AdminNavbar";
@@ -28,7 +28,20 @@ function User() {
   const [hasImage, setHasImage] = React.useState(true);
   const location = useLocation();
   const mainPanel = React.useRef(null);
+
+  const [userList, setUserList] = useState([])
+  var row_count = 0;
+
+  async function fetchData() {
+    await fetch("http://localhost:4000/user/all")
+      .then((res) => res.json())
+      .then((result) => {
+        setUserList(result);
+      })
+  }
+
   React.useEffect(() => {
+    fetchData();
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
     mainPanel.current.scrollTop = 0;
@@ -71,60 +84,19 @@ function User() {
                           </tr>
                         </thead>
                         <tbody>
-                          <tr>
-                            <td>1</td>
-                            <td>Dakota Rice</td>
-                            <td>$36,738</td>
-                            <td>Niger</td>
-                            <td>Oud-Turnhout</td>
-                            <td>Oud-Turnhout</td>
-                            <td><button type="button" class="btn btn-danger">Drop</button></td>
-                          </tr>
-                          <tr>
-                            <td>2</td>
-                            <td>Minerva Hooper</td>
-                            <td>$23,789</td>
-                            <td>Curaçao</td>
-                            <td>Sinaai-Waas</td>
-                            <td>Oud-Turnhout</td>
-                            <td><button type="button" class="btn btn-danger">Drop</button></td>
-                          </tr>
-                          <tr>
-                            <td>3</td>
-                            <td>Sage Rodriguez</td>
-                            <td>$56,142</td>
-                            <td>Netherlands</td>
-                            <td>Baileux</td>
-                            <td>Oud-Turnhout</td>
-                            <td><button type="button" class="btn btn-danger">Drop</button></td>
-                          </tr>
-                          <tr>
-                            <td>4</td>
-                            <td>Philip Chaney</td>
-                            <td>$38,735</td>
-                            <td>Korea, South</td>
-                            <td>Overland Park</td>
-                            <td>Oud-Turnhout</td>
-                            <td><button type="button" class="btn btn-danger">Drop</button></td>
-                          </tr>
-                          <tr>
-                            <td>5</td>
-                            <td>Doris Greene</td>
-                            <td>$63,542</td>
-                            <td>Malawi</td>
-                            <td>Feldkirchen in Kärnten</td>
-                            <td>Oud-Turnhout</td>
-                            <td><button type="button" class="btn btn-danger">Drop</button></td>
-                          </tr>
-                          <tr>
-                            <td>6</td>
-                            <td>Mason Porter</td>
-                            <td>$78,615</td>
-                            <td>Chile</td>
-                            <td>Gloucester</td>
-                            <td>Oud-Turnhout</td>
-                            <td><button type="button" class="btn btn-danger">Drop</button></td>
-                          </tr>
+                          {userList && userList.map(row => {
+                            return (
+                              <tr key={row_count}>
+                                <td>{row.username}</td>
+                                <td>{row.name}</td>
+                                <td>{row.email}</td>
+                                <td>{row.contactNumber}</td>
+                                <td>{row.addressLine}</td>
+                                <td>{row.pincode}</td>
+                                <td><button type="button" class="btn btn-danger">Drop</button></td>
+                              </tr>
+                            );
+                          })}
                         </tbody>
                       </Table>
                     </Card.Body>

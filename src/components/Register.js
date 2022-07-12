@@ -6,7 +6,6 @@ import bloodcover from "../images/blood1.jpg"
 
 const Register = () => {
     
-
   return  <div style={{backgroundColor:"#f2f2f2", minHeight:"100vh"}}>
   <div className="container">
       <div className="row justify-content-center my-4">
@@ -107,7 +106,7 @@ const Register = () => {
       </div>
   </div>
 
-</div>
+// </div>
 };
 
 export default Register;

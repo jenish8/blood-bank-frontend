@@ -5,6 +5,7 @@ import Menu from './components/menu';
 import { PLACES } from './shared/places';
 import Footer from './components/Footer';
 import Register from './components/Register'
+import Appointment from './components/Appointment';
 
 import { BrowserRouter, Route, Routes, Redirect,Navigate } from "react-router-dom";
 // import { injectStyle } from "react-toastify/dist/inject-style";
@@ -53,6 +54,7 @@ class App extends React.Component {
 				<Routes>
 					<Route path='/register' element={<Register/>} />
 					<Route path='/donor/register' element={<D_Register/>} />
+					<Route path='/appointment' element={<Appointment />} />
 					<Route path='/' element={
 						<>
 							<div className='App'>
@@ -60,28 +62,31 @@ class App extends React.Component {
 								<div className="container" id="brand">
 									<NavbarBrand>Daiict Blood bank</NavbarBrand>
 								</div>
+
 								<h1>Blood Bank Management System</h1>
 								<Menu places={this.state.places}>
 								</Menu>
 								<Footer />
 
 							</div>
+
+
 						</>
 					} />
 				</Routes>
 				<Routes>
-				<Route path="/admin" element={<AdminLayout />} />
-				<Route path="/admin/dashboard" element={<AdminLayout />} />
-				<Route path="/admin/user" element={<UserLayout />} />
-				<Route path="/admin/donor" element={<DonorLayout />} />
-				<Route path="/admin/donation" element={<DonationLayout />} />
-				<Route path="/admin/program" element={<ProgramDriveLayout />} />
-				<Route path="/admin/supervisor" element={<SupervisorLayout />} />
-				<Route path="/admin/address" element={<AddressLayout />} />
-				<Route path="/admin/recipient" element={<RecipientLayout />} />
-				<Route path="/admin/transaction" element={<TransactionLayout />} />
-				<Route path="/admin/bottles" element={<BloodBottlesLayout />} />
-				<Route path="/admin/prerequesites" element={<PrerequesitesLayout />} />
+					<Route path="/admin" element={<AdminLayout />} />
+					<Route path="/admin/dashboard" element={<AdminLayout />} />
+					<Route path="/admin/user" element={<UserLayout />} />
+					<Route path="/admin/donor" element={<DonorLayout />} />
+					<Route path="/admin/donation" element={<DonationLayout />} />
+					<Route path="/admin/program" element={<ProgramDriveLayout />} />
+					<Route path="/admin/supervisor" element={<SupervisorLayout />} />
+					<Route path="/admin/address" element={<AddressLayout />} />
+					<Route path="/admin/recipient" element={<RecipientLayout />} />
+					<Route path="/admin/transaction" element={<TransactionLayout />} />
+					<Route path="/admin/bottles" element={<BloodBottlesLayout />} />
+					<Route path="/admin/prerequesites" element={<PrerequesitesLayout />} />
 				</Routes>
 			</BrowserRouter>
 

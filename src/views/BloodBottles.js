@@ -39,6 +39,24 @@ function BloodBottles() {
         setUserList(result);
       })
   }
+  async function fetchBloodGroup(event) {
+    console.log(event.target.value);
+    const url = `http://localhost:4000/bloodBottle/blood-find`;
+    const blood= event.target.value;
+    const result = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                blood,
+            }),
+        })
+
+    const res = await result.json();
+    console.log(res);
+    setUserList(res);
+  }
 
   React.useEffect(() => {
     fetchData();
@@ -67,10 +85,19 @@ function BloodBottles() {
               <Row>
                 <Col md="12">
                   <div class="search-container">
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Search Blood Bottles by Blood Group:</strong>&nbsp;&nbsp;&nbsp; 
-                    <input type="text" placeholder="Search.." name="search" />
-                    <button type="submit"><i class="fa fa-search"></i></button>
-                  </div><br/><br/>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Search Donor Details By Username:</strong>&nbsp;&nbsp;&nbsp; 
+                    <select onChange={fetchBloodGroup}>
+                      <option>Choose Blood Group</option>
+                      <option value="A+">A+</option>
+                      <option value="A-">A-</option>
+                      <option value="B+">B+</option>
+                      <option value="B-">B-</option>
+                      <option value="O+">O+</option>
+                      <option value="O-">O-</option>
+                      <option value="AB+">AB+</option>
+                      <option value="AB-">AB-</option>
+                    </select>
+                  </div><br /><br />
                   <Card className="card-plain table-plain-bg">
                     <Card.Header>
                       <Card.Title as="h4">Blood Bottles Database</Card.Title>
@@ -86,10 +113,10 @@ function BloodBottles() {
                           </tr>
                         </thead>
                         <tbody>
-                        {userList && userList.map(row => {
+                          {userList && userList.map(row => {
                             return (
                               <tr key={row_count}>
-                                <td>{row._id}</td>                                                
+                                <td>{row._id}</td>
                                 <td>{row.bloodGroup}</td>
                                 <td>{`${row.isExpired}`}</td>
                                 <td>{`${row.recipientId}`}</td>

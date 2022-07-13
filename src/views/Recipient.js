@@ -40,6 +40,25 @@ function Recipient() {
       })
   }
 
+  async function fetchUsername(event) {
+    
+    const url = `http://localhost:4000/user/recipient-find`;
+    const name= event.target.value;
+    const result = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                name,
+            }),
+        })
+
+    const res = await result.json();
+    console.log(res);
+    setUserList(res);
+  }
+
   React.useEffect(() => {
     fetchData();
     document.documentElement.scrollTop = 0;
@@ -66,6 +85,10 @@ function Recipient() {
             <Container fluid>
               <Row>
                 <Col md="12">
+                <div class="search-container">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Search Recipient Details By Username:</strong>&nbsp;&nbsp;&nbsp; 
+                    <input type="text" placeholder="Search.." name="search" onChange={fetchUsername}/>
+                  </div><br/><br/>
                   <Card className="card-plain table-plain-bg">
                     <Card.Header>
                       <Card.Title as="h4">Recipient Database</Card.Title>

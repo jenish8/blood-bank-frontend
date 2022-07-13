@@ -30,6 +30,8 @@ function ProgramDrive() {
   const mainPanel = React.useRef(null);
 
   const [userList, setUserList] = useState([])
+  const [name, setName] = useState()
+  var sname;
   var row_count = 0;
 
   async function fetchData() {
@@ -40,8 +42,49 @@ function ProgramDrive() {
       })
   }
 
+  async function fetchProgramname(event) {
+    
+    const url = `http://localhost:4000/drive/program-find`;
+    const name= event.target.value;
+    const result = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                name,
+            }),
+        })
+
+    const res = await result.json();
+    console.log(res);
+    setUserList(res);
+  }
+
+  async function fetchName(contactNumber) {
+    
+    const url = `http://localhost:4000/supervisor/all`;
+
+    const result = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                contactNumber,
+            }),
+        })
+
+    const superName = await result.json();
+    console.log(superName);
+    sname=superName.supervisorName;
+    setName(sname);
+    console.log(name);
+  }
+
   React.useEffect(() => {
     fetchData();
+    //{fetchName("8000561122")}
     document.documentElement.scrollTop = 0;
     document.scrollingElement.scrollTop = 0;
     mainPanel.current.scrollTop = 0;
@@ -66,6 +109,10 @@ function ProgramDrive() {
             <Container fluid>
               <Row>
                 <Col md="12">
+                <div class="search-container">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Search Donor Details By Username:</strong>&nbsp;&nbsp;&nbsp; 
+                    <input type="text" placeholder="Search.." name="search" onChange={fetchProgramname}/>
+                  </div><br/><br/>
                   <Card className="card-plain table-plain-bg">
                     <Card.Header>
                       <Card.Title as="h4">Program Drive Database</Card.Title>
@@ -75,8 +122,9 @@ function ProgramDrive() {
                         <thead>
                           <tr>
                             <th className="border-0">Program_ID</th>
-                            <th className="border-0">Program_Name</th>
-                            <th className="border-0">Program_Date</th>
+                            <th className="border-0">Program Name</th>
+                            <th className="border-0">Program Date</th>
+                            <th className="border-0">Supervisor Name</th>
                             <th className="border-0">Contact No</th>
                             <th className="border-0">Accept</th>
                             <th className="border-0">Reject</th>
@@ -89,6 +137,8 @@ function ProgramDrive() {
                                 <td>{row._id}</td>
                                 <td>{row.programName}</td>
                                 <td>{row.programDate}</td>
+                                <td onLoad={fetchName(row.contactNumber)} hidden="hidden"></td>
+                                <td>{name}</td>
                                 <td>{row.contactNumber}</td>
                                 <td><button type="button" class="btn btn-success">Accept</button></td>
                                 <td><button type="button" class="btn btn-danger">Reject</button></td>

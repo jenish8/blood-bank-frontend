@@ -19,8 +19,6 @@ import UserLayout from "./views/User";
 import DonorLayout from "./views/Donor";
 import DonationLayout from "./views/Donation";
 import ProgramDriveLayout from "./views/ProgramDrive";
-import AddressLayout from "./views/Address";
-import SupervisorLayout from "./views/Supervisor";
 import TransactionLayout from "./views/Transaction.js";
 import BloodBottlesLayout from "./views/BloodBottles.js";
 import PrerequesitesLayout from "./views/Prerequesites.js";
@@ -66,8 +64,6 @@ class App extends React.Component {
 				<Route path="/admin/donor" element={<DonorLayout />} />
 				<Route path="/admin/donation" element={<DonationLayout />} />
 				<Route path="/admin/program" element={<ProgramDriveLayout />} />
-				<Route path="/admin/supervisor" element={<SupervisorLayout />} />
-				<Route path="/admin/address" element={<AddressLayout />} />
 				<Route path="/admin/recipient" element={<RecipientLayout />} />
 				<Route path="/admin/transaction" element={<TransactionLayout />} />
 				<Route path="/admin/bottles" element={<BloodBottlesLayout />} />
@@ -81,5 +77,4 @@ class App extends React.Component {
 
 
 }
-
 export default App;

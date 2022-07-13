@@ -20,8 +20,6 @@ import User from "./views/User.js";
 import Donor from "./views/Donor.js";
 import Donation from "./views/Donation.js";
 import ProgramDrive from "./views/ProgramDrive.js";
-import Supervisor from "./views/Supervisor.js";
-import Address from "./views/Address.js";
 import Recipient from "./views/Recipient.js";
 import Transaction from "./views/Transaction.js";
 import BloodBottles from "./views/BloodBottles.js";
@@ -69,20 +67,6 @@ const dashboardRoutes = [
     name: "Program Drive",
     icon: "nc-icon nc-atom",
     component: ProgramDrive,
-    layout: "/admin"
-  },
-  {
-    path: "/supervisor",
-    name: "Supervisor Details",
-    icon: "nc-icon nc-circle-09",
-    component: Supervisor,
-    layout: "/admin"
-  },
-  {
-    path: "/address",
-    name: "Address",
-    icon: "nc-icon nc-bank",
-    component: Address,
     layout: "/admin"
   },
   {

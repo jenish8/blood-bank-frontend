@@ -42,6 +42,25 @@ function ProgramDrive() {
       })
   }
 
+  async function fetchProgramname(event) {
+    
+    const url = `http://localhost:4000/drive/program-find`;
+    const name= event.target.value;
+    const result = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                name,
+            }),
+        })
+
+    const res = await result.json();
+    console.log(res);
+    setUserList(res);
+  }
+
   async function fetchName(contactNumber) {
     
     const url = `http://localhost:4000/supervisor/all`;
@@ -61,13 +80,6 @@ function ProgramDrive() {
     sname=superName.supervisorName;
     setName(sname);
     console.log(name);
-    // console.log("Number == "+contactNumber);
-    // await fetch(url)
-    //   //.then((res) => res.json())
-    //   .then((result) => {
-    //     console.log(result);
-    //     setName(result.supervisorName);
-    //   })
   }
 
   React.useEffect(() => {
@@ -97,6 +109,10 @@ function ProgramDrive() {
             <Container fluid>
               <Row>
                 <Col md="12">
+                <div class="search-container">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Search Donor Details By Username:</strong>&nbsp;&nbsp;&nbsp; 
+                    <input type="text" placeholder="Search.." name="search" onChange={fetchProgramname}/>
+                  </div><br/><br/>
                   <Card className="card-plain table-plain-bg">
                     <Card.Header>
                       <Card.Title as="h4">Program Drive Database</Card.Title>

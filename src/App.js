@@ -6,6 +6,8 @@ import { PLACES } from './shared/places';
 import Footer from './components/Footer';
 import Register from './components/Register'
 import Appointment from './components/Appointment';
+import ForgetPassword from './components/forgetPassword';
+import ChangePassword from './components/ChangePassword';
 
 import { BrowserRouter, Route, Routes, Redirect,Navigate } from "react-router-dom";
 // import { injectStyle } from "react-toastify/dist/inject-style";
@@ -53,6 +55,8 @@ class App extends React.Component {
 					<Route path='/register' element={<Register/>} />
 					<Route path='/donor/register' element={<D_Register/>} />
 					<Route path='/appointment' element={<Appointment />} />
+					<Route path='/forgetpassword' element={<ForgetPassword/>}/>
+					<Route path='/changepassword' element={<ChangePassword/>}/>
 					<Route path='/' element={
 						<>
 							<div className='App'>

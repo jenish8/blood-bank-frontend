@@ -40,6 +40,25 @@ function Donor() {
       })
   }
 
+  async function fetchUsername(event) {
+    
+    const url = `http://localhost:4000/user/donor-find`;
+    const name= event.target.value;
+    const result = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                name,
+            }),
+        })
+
+    const res = await result.json();
+    console.log(res);
+    setUserList(res);
+  }
+
   React.useEffect(() => {
     fetchData();
     document.documentElement.scrollTop = 0;
@@ -67,9 +86,8 @@ function Donor() {
               <Row>
                 <Col md="12">
                   <div class="search-container">
-                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Search Donor Details by Name:</strong>&nbsp;&nbsp;&nbsp; 
-                    <input type="text" placeholder="Search.." name="search" />
-                    <button type="submit"><i class="fa fa-search"></i></button>
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Search Donor Details By Username:</strong>&nbsp;&nbsp;&nbsp; 
+                    <input type="text" placeholder="Search.." name="search" onChange={fetchUsername}/>
                   </div><br/><br/>
                   <Card className="card-plain table-plain-bg">
                     <Card.Header>

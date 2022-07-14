@@ -84,24 +84,13 @@ const ChangePassword = () => {
                       </div>
                   </div>
                   <form onSubmit={'#'} name="signup">
+                      
+
                       <div className="form-group my-3 text-start">
-                          <label className="form-control-placeholder">Name</label>
-                          <input type="text"
-                              className={`form-control  `}
-                              name="name"  onChange={'#'} />
-                          {/* {errors.firstName && <div className="alert-danger my-3 p-2">{errors.firstName}</div>} */}
-                      </div>
-                      {/* <div className="form-group my-3 text-start">
-                          <label className="form-control-placeholder">Last Name</label>
-                          <input type="text" className={`form-control  `}
-                              name="lastName"  onChange={'#'} />
-                          {errors.lastName && <div className="alert-danger my-3 p-2">{errors.lastName}</div>}
-                      </div> */}
-                      <div className="form-group my-3 text-start">
-                          <label className="form-control-placeholder">Email</label>
-                          <input type="email" className={`form-control `}
-                              name="email"  onChange={'#'} />
-                          {/* {errors.email && <div className="alert-danger my-3 p-2">{errors.email}</div>} */}
+                          <label className="form-control-placeholder">OTP</label>
+                          <input type="text" className={`form-control `}
+                              name="password"  onChange={'#'} />
+                          {/* {errors.password && <div className="alert-danger my-3 p-2">{errors.password}</div>} */}
                       </div>
 
                       <div className="form-group my-3 text-start">
@@ -116,11 +105,7 @@ const ChangePassword = () => {
                           {/* {errors.confirmPassword && <div className="alert-danger my-3 p-2">{errors.confirmPassword}
                           </div>} */}
                       </div>
-                      <div className="form-group my-3 text-start">
-                          <label className="form-control-placeholder">Contact Number</label>
-                          <input type="contactNumber" className={`form-control `}
-                              name="contactNumber"  />
-                      </div>
+                      
 
                       {/* <div className="form-group my-3 text-start">
                           <label className="form-control-placeholder">Date Of Birth</label>
@@ -145,22 +130,13 @@ const ChangePassword = () => {
                           <label className='ms-3'>Female</label>
                           <input type="radio" className={`ms-2  `} name="gender" value="female" />
                       </div> */}
-                      <div className="form-group my-3 text-start">
-                          <label className="form-control-placeholder">Address</label>
-                          <textarea className={`form-control`} name="address" />
-                          {/* {errors.address && <div className="alert-danger my-3 p-2">{errors.address}</div>} */}
-                      </div>
+                     
 
                       <div className="form-group my-3">
-                          <button type="submit" className="form-control btn btn-primary rounded submit px-3">Sign
-                              Up</button>
+                          <button type="submit" className="form-control btn btn-primary rounded submit px-3">Change Password </button>
                       </div>
                       <div className="form-group mt-5">
-                          <div className="w-100 text-center">
-                              <p>Not a member?
-                                  {" "}<Link data-toggle="tab" to="/login">Sign In</Link>
-                              </p>
-                          </div>
+                          
                       </div>
                       </form> 
               </div>

@@ -12,9 +12,10 @@ import R_Register from './components/R_Register';
 import Wallet from './components/Wallet';
 import D_Register from './components/D_Register';
 
+import { ToastContainer, toast } from "react-toastify";
 
 import { BrowserRouter, Route, Routes, Redirect,Navigate } from "react-router-dom";
-// import { injectStyle } from "react-toastify/dist/inject-style";
+import { injectStyle } from "react-toastify/dist/inject-style";
 
 import "bootstrap/dist/css/bootstrap.min.css";
 import "./assets/css/animate.min.css";
@@ -33,9 +34,9 @@ import PrerequesitesLayout from "./views/Prerequesites.js";
 import RecipientLayout from "./views/Recipient";
 
 
-// if (typeof window !== "undefined") {
-// 	injectStyle();
-//   }
+if (typeof window !== "undefined") {
+	injectStyle();
+  }
   
 
 class App extends React.Component {
@@ -49,14 +50,14 @@ class App extends React.Component {
 	}
 
 	render() {
-		// function notify(msg) {
-		// 	toast(msg);
-		//   }
+		function notify(msg) {
+			toast(msg);
+		  }
 		return (
 
 			<BrowserRouter>
 				<Routes>
-					<Route path='/register' element={<Register/>} />
+					<Route path='/register' element={<Register notify={notify}/>} />
 					<Route path='/donor/register' element={<D_Register/>} />
 					<Route path='/recipient/register' element={<R_Register/>}/>
 					<Route path='/appointment' element={<Appointment />} />

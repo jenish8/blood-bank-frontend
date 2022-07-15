@@ -6,6 +6,8 @@ import { PLACES } from './shared/places';
 import Footer from './components/Footer';
 import Register from './components/Register'
 import Appointment from './components/Appointment';
+import ForgetPassword from './components/forgetPassword';
+import ChangePassword from './components/ChangePassword';
 import R_Register from './components/R_Register';
 import Wallet from './components/Wallet';
 import D_Register from './components/D_Register';
@@ -58,6 +60,8 @@ class App extends React.Component {
 					<Route path='/donor/register' element={<D_Register/>} />
 					<Route path='/recipient/register' element={<R_Register/>}/>
 					<Route path='/appointment' element={<Appointment />} />
+					<Route path='/forgetpassword' element={<ForgetPassword/>}/>
+					<Route path='/changepassword' element={<ChangePassword/>}/>
 					<Route path='/wallet' element={<Wallet />} />
 					<Route path='/' element={
 						<>

@@ -39,6 +39,24 @@ function Prerequesites() {
         setUserList(result);
       })
   }
+  async function fetchStockname(event) {
+    
+    const url = `http://localhost:4000/prerequesites/stock-find`;
+    const name= event.target.value;
+    const result = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                name,
+            }),
+        })
+
+    const res = await result.json();
+    console.log(res);
+    setUserList(res);
+  }
   React.useEffect(() => {
     fetchData();
     document.documentElement.scrollTop = 0;
@@ -66,9 +84,9 @@ function Prerequesites() {
               <Row>
                 <Col md="12">
                   <div class="search-container">
-                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Search Prerequesites by Stock Name:</strong>&nbsp;&nbsp;&nbsp;
-                    <input type="text" placeholder="Search.." name="search" />
-                    <button type="submit"><i class="fa fa-search"></i></button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Search Prerequesites By Stock Name:</strong>&nbsp;&nbsp;&nbsp;
+                    <input type="text" placeholder="Search.." name="search" onChange={fetchStockname}/>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                     <button type="button" class="btn btn-danger btn-lg">Add Stock</button>
                   </div><br /><br />
                   <Card className="card-plain table-plain-bg">

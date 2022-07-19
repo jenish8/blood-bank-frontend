@@ -40,7 +40,37 @@ function User() {
       })
   }
 
-  
+  async function fetchUsername(event) {
+    
+    const url = `http://localhost:4000/user/user-find`;
+    const name= event.target.value;
+    const result = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                name,
+            }),
+        })
+
+    const res = await result.json();
+    console.log(res);
+    setUserList(res);
+  }
+
+  async function delUsername(event) {
+    const username=event.target.value;
+    const url = `http://localhost:4000/user/delete/${username}`;
+    const result = await fetch(url, {
+            method: 'DELETE',
+            headers: {
+                'Content-Type': 'application/json',
+            }
+        })
+
+    fetchData();
+  }
 
   React.useEffect(() => {
     fetchData();
@@ -68,6 +98,10 @@ function User() {
             <Container fluid>
               <Row>
                 <Col md="12">
+                <div class="search-container">
+                  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Search Donor Details By Username:</strong>&nbsp;&nbsp;&nbsp; 
+                    <input type="text" placeholder="Search.." name="search" onChange={fetchUsername}/>
+                  </div><br/><br/>
                   <Card className="card-plain table-plain-bg">
                     <Card.Header>
                       <Card.Title as="h4">User Database</Card.Title>
@@ -95,7 +129,7 @@ function User() {
                                 <td>{row.contactNumber}</td>
                                 <td>{row.addressLine}</td>
                                 <td>{row.pincode}</td>
-                                <td><button type="button" class="btn btn-danger">Drop</button></td>
+                                <td><button type="button" class="btn btn-danger" value={row.username} onClick={delUsername}>Drop</button></td>
                               </tr>
                             );
                           })}

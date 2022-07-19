@@ -1,205 +1,144 @@
 import React from "react";
-import logo from "./images/bloodbank_logo.png"
-import {makeStyles} from "@mui/styles"
+import bloodcover from "../images/blood1.jpg"
+import { makeStyles } from "@mui/styles"
+import { useState, useEffect } from "react";
+
+import { Link } from 'react-router-dom';
 
 
-const useStyles = makeStyles ({
-
-    body:{
-        background: "#CD5C5C",
-        fontFamily: "Pacifico', cursive",
-        
-        
-       
-    },
-    heading:{
-   
-        marginBottom: "10px",    
-        marginLeft: "140px",
-        fontFamily: "Cedarville Cursive', cursive"
-        
-    },
-    form:{
-  
-        border: "10px 10px 10px 10px",
-        background: "#fbfbfbaf",
-         height: "700px",
-         width: "502px",
-         marginTop:"70px",
-         marginLeft: "500px",
-         border: "solid"
-         
-     },
-     btn:{
-        background: "#1687A7",
-        color:"black",
-        width: "100px",
-        fontWeight: "bolder",
-        marginTop: "40px",
-        border: "none"
-       
-    },
-    
-    transition: "0.3s all",
-    "&:hover":{
-       
-      
-       
-        background: "#0F2C67",
-        color:"white"
-        
-    },
-
-
-    
-    label: {
-        fontWeight: "bold",
-       alignItems: "center",
-        paddingBottom: "5px"
-      
-      
-      
-    },
-    
-    input: {
-    
-      
-       background: "lightgray",
-        border:"none",
-       display: "inline-block",
-       marginTop: "10px",
-       padding: "10px"
-      
-    },
-    
-    
-    
-    
-    
-    
-    option:{
-    
-        background: "lightgray"
-    
-    },
-
-    img: {
-         position: "inline",
-         paddingLeft: "220",
-         marginLeft : "auto",
-         marginRight: "auto"
-    }
-    
-    
-    
-     
-
-});
 
 
 function Appointment() {
 
-   
-        const classes = useStyles();
-    
-    
+    // const classes = useStyles();
 
-    
-    return <div>
-        <form className={classes.body}>
-            <div className={classes.form}>
-                <div>
-                    <h1 className={classes.heading}>Blood Donation Appointment</h1>
-                    {<img
-                        src={logo}
-                       
-                        height={80}
-                        width={80}
-                        className="img"
-                        alt="Blood Bank logo"
-                    />}
+    const [username, setusername] = useState("");
+    const [gender, setgender] = useState("");
+    const [bloodGroup, setBloodGroup] = useState("");
+    const [appointmentDate, setappointmentDate] = useState("");
+    const [age, setAge] = useState("");
+    const [weight, setWeight] = useState();
+    console.log(bloodGroup);
+
+
+    async function registerAppointment(event) {
+        event.preventDefault();
+
+        if (username === "") {
+            alert("Enter Username");
+            return;
+        }
+
+       
+        if (appointmentDate === "") {
+            alert("Enter Appointment");
+            return;
+        }
+
+        if (age === "") {
+            alert("Enter Age");
+            return;
+        }
+
+       
+        const result = await fetch('http://localhost:4000/user/donation-add', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                username,
+                appointmentDate,
+            }),
+        })
+
+        const data = await result.json();
+        console.log(data);
+
+
+    }
+
+    return <div style={{ backgroundColor: "#f2f2f2", minHeight: "100vh" }}>
+        <div className="container">
+            <div className="row justify-content-center my-4">
+                <div className="col-md-7 col-lg-5 shadow p-3" style={{ backgroundColor: "pink" }}>
+                    <div className="rounded w-100"
+                        style={{ backgroundImage: `url(${bloodcover})`, height: "300px", backgroundSize: "100%", backgroundRepeat: "no-repeat" }}>
+                    </div>
+                    <div className="p-3">
+                        <div className="d-flex">
+                            <div className="w-100">
+                                <h3 className="mb-4 h1">Appointment Page</h3>
+                            </div>
+                        </div>
+                        <form onSubmit={'#'} name="signup">
+                            <div className="form-group my-3 text-start">
+                                <label className="form-control-placeholder">Username</label>
+                                <input type="text"
+                                    className={`form-control  `}
+                                    value = {username}
+                                    name="name" onChange={(e)=>setusername(e.target.value)} />
+                                {/* {errors.firstName && <div className="alert-danger my-3 p-2">{errors.firstName}</div>} */}
+                            </div>
+                            {/* <div className="form-group my-3 text-start">
+                          <label className="form-control-placeholder">Last Name</label>
+                          <input type="text" className={`form-control  `}
+                              name="lastName"  onChange={'#'} />
+                          {errors.lastName && <div className="alert-danger my-3 p-2">{errors.lastName}</div>}
+                      </div> */}
+                            <br></br>
+
+
+                           
+
+                            {/* <div className="form-group my-3 text-start">
+                          <label className="form-control-placeholder">Date Of Birth</label>
+                          <input type="date" className={`form-control`} name="dob" />
+                      </div>
+                      <div className="form-group my-3 text-start">
+                          <label className="form-control-placeholder">Aadhar Number</label>
+                          <input type="number" className={`form-control `} name="username"  />
+                      </div> */}
+                            {/* <div className="form-group my-3 text-start">
+                          <label className="form-control-placeholder">Profile Photo</label>
+                          <input type="file" accept="image/png, image/jpg, image/jpeg" className={`form-control ${errors.profile ? "is-invalid"
+                              : ""}`} name="profile" value={values.profile} onChange={handleChange} />
+                          {errors.profile && <div className="alert-danger my-3 p-2">{errors.profile}
+                          </div>}
+                      </div> */}
+                            {/* <div className="form-group my-3 text-start">
+                          <label className="form-control-placeholder">Gender</label>
+                          <br />
+                          <label>Male</label>
+                          <input type="radio" className={`ms-2  `} name="gender" value="male"   />
+                          <label className='ms-3'>Female</label>
+                          <input type="radio" className={`ms-2  `} name="gender" value="female" />
+                      </div> */}
+
+                            <div className="form-group my-3">
+                                <label className="form-control-placeholder">Appointment Date</label>
+                                <input type="date" className={`form-control `}
+                                    name="password" value={appointmentDate}  
+                                    onChange={(e)=>setappointmentDate(e.target.value)}
+                                    />
+                            </div>
+
+                            <div className="form-group my-3">
+                                <button type="submit" onClick={registerAppointment} className="form-control btn btn-primary rounded submit px-3">Book Appointment
+                                </button>
+                            </div>
+                            <div className="form-group mt-5">
+                                <div className="w-100 text-center">
+
+                                </div>
+                            </div>
+                        </form>
+                    </div>
                 </div>
-                <hr />
-                <label htmlFor="">Name</label>
-                <br />
-                <input type="text" size={61}  className={classes.text} placeholder="Enter your name" />
-                <br />
-                <br />
-
-
-                <label width={70}>Gender</label> &nbsp;
-                <select className="gender" style={{ width: "200px", height: "30px" }}>
-                    <option>Male</option>
-                    <option>Female</option>
-
-                </select>
-                <br />  <br />
-
-                <label width={70}>Blood Group</label> &nbsp;
-                <select className="gender" style={{ width: "200px", height: "30px" }}>
-                    <option>A+</option>
-                    <option>A-</option>
-                    <option>B+</option>
-                    <option>B-</option>
-                    <option>O+</option>
-                    <option>O-</option>
-                    <option>AB+</option>
-                    <option>AB-</option>
-
-                </select>
-                <br />
-                <br />
-                <label>Appointment Date</label>&nbsp;
-                <input
-                type="date"
-                 />
-
-
-
-                <br />
-                <br />
-                <br />
-                <label htmlFor="">Age</label>
-                <br />
-                <input
-                    type="number"
-                    size={68}
-                    onkeydown="pass(this)"
-                    id="password"
-                    className="text"
-                    placeholder="Enter Age"
-                    required=""
-                />
-                <error style={{ color: "red", fontWeight: "bolder" }} id="size" />
-                <br />
-                <label >Body Weight</label>
-                <br />
-
-                <input
-                    type="number"
-                    size={68}
-                    onkeydown="pass(this)"
-                    id="password"
-                    className="text"
-                    placeholder="Enter Weight"
-                    required=""
-                   
-                />
-                
-                <br />
-                <error style={{ color: "red", fontWeight: "bolder" }} id="alert" />
-                <input
-                    type="submit"
-                    className={classes.btn}
-                    defaultValue="SUBMIT"
-                    style={{ marginLeft: 200 }}
-                />
             </div>
-        </form >
+        </div>
 
-    </div >
-
-
-}
+    </div>
+};
 
 export default Appointment;

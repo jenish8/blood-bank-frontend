@@ -3345,7 +3345,7 @@
     "strip-ansi" "^6.0.0"
     "wrap-ansi" "^7.0.0"
 
-"clsx@^1.2.0":
+"clsx@^1.1.1", "clsx@^1.2.0":
   "integrity" "sha512-EcR6r5a8bj6pu3ycsa/E/cKVGuTgZJZdsyUYHOksG/UHIiKfjxzRxYJpyVBwYaQeOvghal9fcc4PidlgzugAQg=="
   "resolved" "https://registry.npmjs.org/clsx/-/clsx-1.2.1.tgz"
   "version" "1.2.1"
@@ -6989,6 +6989,11 @@
   "resolved" "https://registry.npmjs.org/ms/-/ms-2.1.2.tgz"
   "version" "2.1.2"
 
+"mui@^0.0.1":
+  "integrity" "sha512-iB9zfxsJBcMkZ/SY6X+HGSPr4fftCZIQ76ZMH8iSMfVkidVzRtZlLW2gbWXUe+IMcj8JLv1p+dGKvPVlgtiocA=="
+  "resolved" "https://registry.npmjs.org/mui/-/mui-0.0.1.tgz"
+  "version" "0.0.1"
+
 "multicast-dns@^7.2.5":
   "integrity" "sha512-2eznPJP8z2BFLX50tf0LuODrpINqP1RVIm/CObbTcBRITQgmC/TjcREF1NeTBzIcR5XO/ukWo+YHOjBbFwIupg=="
   "resolved" "https://registry.npmjs.org/multicast-dns/-/multicast-dns-7.2.5.tgz"
@@ -8296,7 +8301,7 @@
     "strip-ansi" "^6.0.1"
     "text-table" "^0.2.0"
 
-"react-dom@^16.8.0 || ^17 || ^18", "react-dom@^18.0.0", "react-dom@^18.2.0", "react-dom@>= 16.8.0", "react-dom@>=16.14.0", "react-dom@>=16.6.0", "react-dom@>=16.8", "react-dom@>=16.8.0":
+"react-dom@^16.8.0 || ^17 || ^18", "react-dom@^18.0.0", "react-dom@^18.2.0", "react-dom@>= 16.8.0", "react-dom@>=16", "react-dom@>=16.14.0", "react-dom@>=16.6.0", "react-dom@>=16.8", "react-dom@>=16.8.0":
   "integrity" "sha512-6IMTriUmvsjHUjNtEDudZfuDQUoWXVxKHhlEGSk81n4YFS+r/Kl99wXiwlVXtPBtJenozv2P+hxDsw9eA7Xo6g=="
   "resolved" "https://registry.npmjs.org/react-dom/-/react-dom-18.2.0.tgz"
   "version" "18.2.0"
@@ -8313,6 +8318,13 @@
   "integrity" "sha512-rtGImPZ0YyLrscKI9xTpV8psd6I8VAtjKCzQDlzyDvqJA8XOW78TXYQwNRNd8g8JZnDu8q9Fu/1v4HPAVwVdHA=="
   "resolved" "https://registry.npmjs.org/react-fast-compare/-/react-fast-compare-3.2.0.tgz"
   "version" "3.2.0"
+
+"react-hook-use-state@^1.1.0":
+  "integrity" "sha512-H75Oe9NG6vbyry1yqlUyfEej5Ana3Q98lFYkIyPhpUt74nhdDHL3qv/FHNK4Qb3naAxroMz3PB9wUxiLHsmouw=="
+  "resolved" "https://registry.npmjs.org/react-hook-use-state/-/react-hook-use-state-1.1.0.tgz"
+  "version" "1.1.0"
+  dependencies:
+    "@babel/runtime" "^7.5.5"
 
 "react-is@^16.13.1", "react-is@^16.3.2", "react-is@^16.7.0", "react-is@>= 16.8.0":
   "integrity" "sha512-24e6ynE2H+OKt4kqsOvNd8kBpV65zoxbA4BVsEOB3ARVWQki/DHzaUoC5KuON/BiccDaCCTZBuOcfZs70kR8bQ=="
@@ -8422,6 +8434,18 @@
   optionalDependencies:
     "fsevents" "^2.3.2"
 
+"react-toast@^1.0.3":
+  "integrity" "sha512-gL3+O5hlLaoBmd36oXWKrjFeUyLCMQ04AIh48LrnUvdeg2vhJQ0E803TgVemgJvYUXKlutMVn9+/QS2DDnk26Q=="
+  "resolved" "https://registry.npmjs.org/react-toast/-/react-toast-1.0.3.tgz"
+  "version" "1.0.3"
+
+"react-toastify@^9.0.5":
+  "integrity" "sha512-dszPCeQINY+Nm6HmsiAXT/7wsazPqv0S/RuhIYLAW+fTKcd3T1iRjZG0XqrN9nvAzqaE5J6uxMaiBrOevxjY8g=="
+  "resolved" "https://registry.npmjs.org/react-toastify/-/react-toastify-9.0.5.tgz"
+  "version" "9.0.5"
+  dependencies:
+    "clsx" "^1.1.1"
+
 "react-transition-group@^4.4.2":
   "integrity" "sha512-/RNYfRAMlZwDSr6z4zNKV6xu53/e2BuaBbGhbyYIXTrmgu/bGHzmqOs7mJSJBHy9Ud+ApHx3QjrkKSp1pxvlFg=="
   "resolved" "https://registry.npmjs.org/react-transition-group/-/react-transition-group-4.4.2.tgz"
@@ -8443,7 +8467,7 @@
     "shallow-equal" "^1.0.0"
     "uuid" "^3.1.0"
 
-"react@^0.14.9 || ^15.0.0 || ^16.0.0 || ^17.0.0", "react@^16.8.0 || ^17 || ^18", "react@^16.8.0 || ^17.0.0-rc.1 || ^18.0.0", "react@^17.0.0", "react@^17.0.0 || ^18.0.0", "react@^18.0.0", "react@^18.2.0", "react@>= 16", "react@>= 16.8.0", "react@>=0.14.0", "react@>=15.0.0", "react@>=16.14.0", "react@>=16.6.0", "react@>=16.8", "react@>=16.8.0":
+"react@^0.14.9 || ^15.0.0 || ^16.0.0 || ^17.0.0", "react@^16.8.0 || ^17 || ^18", "react@^16.8.0 || ^17.0.0-rc.1 || ^18.0.0", "react@^17.0.0", "react@^17.0.0 || ^18.0.0", "react@^18.0.0", "react@^18.2.0", "react@>= 16", "react@>= 16.8.0", "react@>=0.14.0", "react@>=15.0.0", "react@>=16", "react@>=16.14.0", "react@>=16.6.0", "react@>=16.8", "react@>=16.8.0":
   "integrity" "sha512-/3IjMdb2L9QbBdWiW5e3P2/npwMBaU9mHCSCUzNln0ZCYbcfTsGbTJrU/kGemdH2IWmB2ioZ+zkxtmq6g09fGQ=="
   "resolved" "https://registry.npmjs.org/react/-/react-18.2.0.tgz"
   "version" "18.2.0"

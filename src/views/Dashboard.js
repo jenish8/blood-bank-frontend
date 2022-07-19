@@ -1,4 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
+
 import ChartistGraph from "react-chartist";
 // react-bootstrap components
 import {
@@ -17,6 +19,35 @@ import {
 } from "react-bootstrap";
 
 function Dashboard() {
+
+
+  const [userDonations, setDonations] = useState("");
+  const [userRevenue, setRevenue] = useState("");
+
+  const location = useLocation();
+
+
+  async function fetchDonations() {
+    await fetch("http://localhost:4000/user/total-donations")
+      .then((res) => res.json())
+      .then((result) => {
+        setDonations(result);
+      })
+  }
+
+  async function fetchRevenue() {
+    await fetch("http://localhost:4000/transaction/revenue")
+      .then((res) => res.json())
+      .then((result) => {
+        setRevenue(result);
+      })
+  }
+
+  React.useEffect(() => {
+    fetchDonations();
+    fetchRevenue();
+  }, [location]);
+
   return (
     <>
       <Container fluid>
@@ -33,7 +64,7 @@ function Dashboard() {
                   <Col xs="7">
                     <div className="numbers">
                       <p className="card-category">Current Year Donations</p>
-                      <Card.Title as="h4">150GB</Card.Title>
+                      <Card.Title as="h4">{userDonations}</Card.Title>
                     </div>
                   </Col>
                 </Row>
@@ -51,8 +82,8 @@ function Dashboard() {
                   </Col>
                   <Col xs="7">
                     <div className="numbers">
-                      <p className="card-category">Current Year Blood Bottles Sold</p>
-                      <Card.Title as="h4">$ 1,345</Card.Title>
+                      <p className="card-category">Current Year Blood Bottles Revenue</p>
+                      <Card.Title as="h4">Rs.{userRevenue}</Card.Title>
                     </div>
                   </Col>
                 </Row>

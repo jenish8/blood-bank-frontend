@@ -9,8 +9,8 @@ const Register = ({notify}) => {
      document.title = "Registration- BloodBank.com"
 
     const formInitialValue = {
-        name: "",
         username:"",
+        name: "",
         email: "",
         password: "",
         confirmPassword: "",
@@ -39,17 +39,17 @@ const Register = ({notify}) => {
         setErrors(errs)
 
         if(Object.keys(errs).length===0){
-            const name = event.target.name.value;
             const userName = event.target.userName.value;
-            //console.log("fn ",firstName);
+            const name = event.target.name.value;
+            //console.log("fn ",name);
             const email = event.target.email.value;
-            const contactNumber = event.target.mobileNumber.value;
+            const contactNumber = event.target.contactNumber.value;
             const password = event.target.password.value;
             const address = event.target.address.value;
 
-            let item = { name,userName, email, contactNumber, password, address }
+            let item = { userName,name, email, contactNumber, password, address }
             // console.warn(item)
-            let result = await fetch("https://auctionpointbackend.herokuapp.com/user/register", {
+            let result = await fetch("http://localhost:4000/user/register", {
                 method: 'POST',
                 body: JSON.stringify(item),
                 headers: {
@@ -59,9 +59,10 @@ const Register = ({notify}) => {
             })
 
             result = await result.json()
-            if(result.message === 'Record created successfully.'){
-                notify("Account verification link has been sent to your mail.")
-            }
+            console.log(result);
+            // if(result.message === 'Record created successfully.'){
+            //     notify("Account verification link has been sent to your mail.")
+            // }
         }
     }
 
@@ -70,7 +71,7 @@ const Register = ({notify}) => {
         if (!values.name) {
             err.name = "Name is required."
         }
-        if (!values.username) {
+        if (!values.userName) {
             err.userName = "Username is required."
         }
         if (!/\S+@\S+\.\S+/.test(values.email)) {

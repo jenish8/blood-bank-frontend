@@ -19,7 +19,7 @@
     "react-router-dom": "^6.3.0",
     "react-scripts": "5.0.1",
     "react-toast": "^1.0.3",
-    "react-toastify": "^9.0.5",
+    "react-toastify": "^9.0.6",
     "react-validation": "^3.0.7",
     "reactjs-popup": "^2.0.5",
     "reactstrap": "^9.1.1",

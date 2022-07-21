@@ -39,6 +39,20 @@ function BloodBottles() {
         setUserList(result);
       })
   }
+
+  async function markExpire() {
+    const url = `http://localhost:4000/bloodBottle/mark`;
+    const result = await fetch(url, {
+      method: 'PUT',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+    })
+    const res = await result.json();
+    console.log(res);
+    fetchData();
+  }
+
   async function fetchBloodGroup(event) {
     console.log(event.target.value);
     const url = `http://localhost:4000/bloodBottle/blood-find`;
@@ -97,6 +111,8 @@ function BloodBottles() {
                       <option value="AB+">AB+</option>
                       <option value="AB-">AB-</option>
                     </select>
+                    &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                    <Button variant="danger" onClick={markExpire}>Mark Expired Bottles</Button>
                   </div><br /><br />
                   <Card className="card-plain table-plain-bg">
                     <Card.Header>

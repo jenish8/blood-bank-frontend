@@ -1,24 +1,17 @@
 import React from "react";
 import validator from "validator";
-import { Link } from "react-router-dom";
+import { Link, Navigate } from "react-router-dom";
 import bloodcover from "../images/blood1.jpg"
+import { useState, useEffect } from "react";
+import {Routes, Route, useNavigate} from 'react-router-dom';
 
 
-const ChangePassword = () => {
-    // document.title = "Registration- BloodBank.com"
 
-    // const formInitialValue = {
-    //     firstName: "",
-    //     lastName: "",
-    //     email: "",
-    //     password: "",
-    //     confirmPassword: "",
-    //     mobileNumber: "",
-    //     dob: "",
-    //     aadharNumber: "",
-    //     gender: "",
-    //     address: ""
-    // }
+
+const Otp = () => {
+    
+    const valueOfOtp = sessionStorage.getItem('otp');
+    const navigate = useNavigate();
     // const [values, setValues] = useState(formInitialValue)
     // const [sucessMessage, setMessage] = useState("")
     // const [errors, setErrors] = useState({})
@@ -69,7 +62,67 @@ const ChangePassword = () => {
     //         }
     //     }
     // }
-    
+    const [otp, setotp] = useState("");
+    const [errors, setErrors] = useState({});
+
+    async function checkOTP(event)
+    {
+       
+        event.preventDefault();
+        let errs = validateForm();
+        setErrors(errs)
+
+      
+
+
+       
+        // console.log(username);
+        // const result = await fetch('http://localhost:4000/appointment/checkmail', {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //     },
+        //     body: JSON.stringify({
+        //         username
+                
+        //     }),
+        // })
+
+        // const data = await result.json();
+        // console.log(data);
+        // sessionStorage.setItem('otp',data);
+        //sessionStorage.getItem('otp')
+        
+      
+           
+          
+            
+        
+
+              
+            
+    }
+
+
+
+    const validateForm = () => {
+        let err = {}
+        if (!otp) {
+            err.otp = "Enter four digit OTP"
+        }
+
+        if(valueOfOtp!=otp){
+            err.otp = "Invalid OTP"
+        }
+        
+        if(valueOfOtp==otp)
+        {
+            navigate('/changepassword')
+        }
+
+        return err;
+    }
+
   return  <div style={{backgroundColor:"#f2f2f2", minHeight:"100vh"}}>
   <div className="container">
       <div className="row justify-content-center my-4">
@@ -80,24 +133,25 @@ const ChangePassword = () => {
               <div className="p-3">
                   <div className="d-flex">
                       <div className="w-100">
-                          <h3 className="mb-4 h1">Change Password</h3>
+                          <h3 className="mb-4 h1">OTP Authentication</h3>
                       </div>
                   </div>
-                  <form onSubmit={'#'} name="signup">
+                  <form onSubmit={checkOTP} name="signup">
                       
 
                       
+                    
                       <div className="form-group my-3 text-start">
-                          <label className="form-control-placeholder">Password</label>
-                          <input type="password" className={`form-control `}
-                              name="password"  onChange={'#'} />
-                          {/* {errors.password && <div className="alert-danger my-3 p-2">{errors.password}</div>} */}
-                      </div>
-                      <div className="form-group my-3 text-start">
-                          <label className="form-control-placeholder">Confirm Password</label>
-                          <input type="password" className={`form-control `} name="confirmPassword" />
-                          {/* {errors.confirmPassword && <div className="alert-danger my-3 p-2">{errors.confirmPassword}
-                          </div>} */}
+                          <label className="form-control-placeholder">OTP</label>
+                          <input type="password" className={`form-control `} 
+                          value={otp}
+                          name="confirmPassword"
+                           onChange={(e)=>setotp(e.target.value)}
+                           />
+
+                        {errors.otp && <div className="alert-danger my-3 p-2">{errors.otp}</div>}
+
+                          
                       </div>
                       
 
@@ -127,7 +181,7 @@ const ChangePassword = () => {
                      
 
                       <div className="form-group my-3">
-                          <button type="submit" className="form-control btn btn-primary rounded submit px-3">Change Password </button>
+                          <button type="submit" className="form-control btn btn-primary rounded submit px-3">Check OTP </button>
                       </div>
                       <div className="form-group mt-5">
                           
@@ -141,4 +195,4 @@ const ChangePassword = () => {
 </div>
 };
 
-export default ChangePassword;
+export default Otp;

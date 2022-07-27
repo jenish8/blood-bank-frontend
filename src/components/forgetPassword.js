@@ -1,10 +1,14 @@
 import React from "react";
 import validator from "validator";
 import { Link } from "react-router-dom";
-import bloodcover from "../images/blood1.jpg"
+import bloodcover from "../images/blood1.jpg";
+import { useState, useEffect } from "react";
+import ChangePassword from "./ChangePassword";
+import {Routes, Route, useNavigate} from 'react-router-dom';
 
 
 const ForgetPassword = () => {
+    const navigate = useNavigate();
     // document.title = "Registration- BloodBank.com"
 
     // const formInitialValue = {
@@ -69,6 +73,49 @@ const ForgetPassword = () => {
     //         }
     //     }
     // }
+    const [username, setusername] = useState("");
+    const [errors, setErrors] = useState({})
+
+    async function checkUser(event)
+    {
+        event.preventDefault();
+        let errs = validateForm();
+        setErrors(errs)
+        console.log(username);
+        const result = await fetch('http://localhost:4000/appointment/checkmail', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                username
+                
+            }),
+        })
+
+        const data = await result.json();
+        console.log(data);
+        sessionStorage.setItem('otp',data);
+        //sessionStorage.getItem('otp')
+        
+      
+           
+          
+            
+        
+
+              navigate('/otp');
+            
+    }
+
+    const validateForm = () => {
+        let err = {}
+        if (!username) {
+            err.username = "Name is required."
+        }
+
+        return err;
+    }
     
   return  <div style={{backgroundColor:"#f2f2f2", minHeight:"100vh"}}>
   <div className="container">
@@ -83,12 +130,13 @@ const ForgetPassword = () => {
                           <h3 className="mb-4 h1">Forget Password </h3>
                       </div>
                   </div>
-                  <form onSubmit={'#'} name="signup">
+                  <form onSubmit={checkUser} name="signup">
                       <div className="form-group my-3 text-start">
-                          <label className="form-control-placeholder">Email</label>
-                          <input type="email"
+                          <label className="form-control-placeholder">Username</label>
+                          <input type="text"
                               className={`form-control  `}
-                              name="name"  onChange={'#'} />
+                              value={username}  onChange={(e)=>setusername(e.target.value)} />
+                               {errors.username && <div className="alert-danger my-3 p-2">{errors.username}</div>}
                           {/* {errors.firstName && <div className="alert-danger my-3 p-2">{errors.firstName}</div>} */}
                       </div>
                       {/* <div className="form-group my-3 text-start">
@@ -127,7 +175,7 @@ const ForgetPassword = () => {
                       
 
                       <div className="form-group my-3">
-                          <button type="submit" className="form-control btn btn-primary rounded submit px-3">Send OTP to Mail</button>
+                          <button type="submit" onSubmit={checkUser} className="form-control btn btn-primary rounded submit px-3">Submit</button>
                       </div>
                       <div className="form-group mt-5">
                           

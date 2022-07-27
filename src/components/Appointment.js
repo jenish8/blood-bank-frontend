@@ -50,15 +50,7 @@ function Appointment() {
 
 
        
-        // if (appointmentDate === "") {
-        //     alert("Enter Appointment");
-        //     return;
-        // }
-
-        // if (age === "") {
-        //     alert("Enter Age");
-        //     return;
-        // }
+        
 
        
         const result = await fetch('http://localhost:4000/user/donation-add', {
@@ -159,7 +151,7 @@ function Appointment() {
                                     name="password" value={appointmentDate} min={moment(new Date()).format('YYYY-MM-DD')}
                                     onChange={(e)=>setappointmentDate(e.target.value)}
                                     />
-                                    {console.log(`"${new Date().getFullYear()}-0${new Date().getMonth()+1}-${new Date().getDate()}"`)}
+                                    {/* {console.log(`"${new Date().getFullYear()}-0${new Date().getMonth()+1}-${new Date().getDate()}"`)} */}
                                 {errors.appointmentDate && <div className="alert-danger my-3 p-2">{errors.appointmentDate}</div>}
 
                             </div>

@@ -11,6 +11,7 @@ import ChangePassword from './components/ChangePassword';
 import R_Register from './components/R_Register';
 import Wallet from './components/Wallet';
 import D_Register from './components/D_Register';
+import Otp from './components/Otp';
 
 import { ToastContainer, toast } from "react-toastify";
 
@@ -64,6 +65,7 @@ class App extends React.Component {
 					<Route path='/forgetpassword' element={<ForgetPassword/>}/>
 					<Route path='/changepassword' element={<ChangePassword/>}/>
 					<Route path='/wallet' element={<Wallet />} />
+					<Route path='/otp' element={<Otp />} />
 					<Route path='/' element={
 						<>
 							<div className='App'>

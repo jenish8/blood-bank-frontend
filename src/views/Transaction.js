@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, Route, Routes } from "react-router-dom";
-
+import moment from "moment";
 import AdminNavbar from "../components/Admin/Navbars/AdminNavbar";
 import Footer from "../components/Admin/Footer/Footer";
 import Sidebar from "../components/Admin/Sidebar/Sidebar";
@@ -36,6 +36,9 @@ function Transaction() {
     await fetch("http://localhost:4000/transaction/all")
       .then((res) => res.json())
       .then((result) => {
+        result.forEach(obj=>{
+          obj.transactionDate = moment(obj.transactionDate).format('DD/MM/YY');
+        })
         setUserList(result);
       })
   }

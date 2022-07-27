@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, Route, Routes } from "react-router-dom";
-
+import moment from "moment";
 import AdminNavbar from "../components/Admin/Navbars/AdminNavbar";
 import Footer from "../components/Admin/Footer/Footer";
 import Sidebar from "../components/Admin/Sidebar/Sidebar";
@@ -38,6 +38,9 @@ function ProgramDrive() {
     await fetch("http://localhost:4000/drive/all")
       .then((res) => res.json())
       .then((result) => {
+        result.forEach(obj=>{
+          obj.programDate = moment(obj.programDate).format('DD/MM/YY')
+        })
         setUserList(result);
       })
   }
@@ -91,7 +94,9 @@ function ProgramDrive() {
         })
 
     const res = await result.json();
-    console.log(res);
+    res.forEach(obj=>{
+      obj.programDate = moment(obj.programDate).format('DD/MM/YY')
+    })
     setUserList(res);
   }
 

@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
-
+import moment from "moment";
 import ChartistGraph from "react-chartist";
 // react-bootstrap components
 import {
@@ -22,7 +22,13 @@ function Dashboard() {
 
 
   const [userDonations, setDonations] = useState("");
-  const [userRevenue, setRevenue] = useState("");
+  const [userRevenue, setRevenue] = useState([]);
+  const [userBottle, setBottle] = useState("");
+  const [userDriveName, setDriveName] = useState("");
+  const [userDriveDate, setDriveDate] = useState("");
+  const [userCount, setCount] = useState([]);
+  const [userStock, setStock] = useState([]);
+  const [userMoDo, setMoDo] = useState([]);
 
   const location = useLocation();
 
@@ -43,9 +49,58 @@ function Dashboard() {
       })
   }
 
+  async function fetchBottlesSold() {
+    await fetch("http://localhost:4000/bloodBottle/bottles-sold")
+      .then((res) => res.json())
+      .then((result) => {
+        setBottle(result);
+      })
+  }
+
+  async function fetchBottle() {
+    await fetch("http://localhost:4000/bloodBottle/bottle-count")
+      .then((res) => res.json())
+      .then((result) => {
+        setCount(result);
+      })
+  }
+
+  async function fetchStock() {
+    await fetch("http://localhost:4000/prerequesites/stock-count")
+      .then((res) => res.json())
+      .then((result) => {
+        setStock(result);
+      })
+  }
+
+  async function fetchMonthlyDonations() {
+    await fetch("http://localhost:4000/user/monthly-donations")
+      .then((res) => res.json())
+      .then((result) => {
+        setMoDo(result);
+      })
+  }
+
+  async function fetchDrive() {
+    console.log("called");
+    await fetch("http://localhost:4000/drive/latest-drive")
+      .then((res) => res.json())
+      .then((result) => {
+        console.log(result);
+        setDriveName(result.programName);
+        const dateFormat = moment(result.programDate).format('DD/MM/YY');
+        setDriveDate(dateFormat);
+      })
+  }
+
   React.useEffect(() => {
     fetchDonations();
     fetchRevenue();
+    fetchBottlesSold();
+    fetchDrive();
+    fetchBottle();
+    fetchStock();
+    fetchMonthlyDonations();
   }, [location]);
 
   return (
@@ -82,8 +137,8 @@ function Dashboard() {
                   </Col>
                   <Col xs="7">
                     <div className="numbers">
-                      <p className="card-category">Current Year Blood Bottles Revenue</p>
-                      <Card.Title as="h4">Rs.{userRevenue}</Card.Title>
+                      <p className="card-category">Current Year Blood Bottles Sold</p>
+                      <Card.Title as="h4">{userBottle}</Card.Title>
                     </div>
                   </Col>
                 </Row>
@@ -121,7 +176,8 @@ function Dashboard() {
                   <Col xs="7">
                     <div className="numbers">
                       <p className="card-category">Upcoming Program Drive</p>
-                      <Card.Title as="h4">+45K</Card.Title>
+                      <Card.Title >Name : {userDriveName}</Card.Title>
+                      <Card.Title >{userDriveDate}</Card.Title>
                     </div>
                   </Col>
                 </Row>
@@ -133,35 +189,77 @@ function Dashboard() {
           <Col md="5">
             <Card>
               <Card.Header>
-                <Card.Title as="h4">Blood Groups Quantity</Card.Title>
+                <Card.Title as="h4">Monthly Donations</Card.Title>
               </Card.Header>
               <Card.Body>
-                <div
-                  className="ct-chart ct-perfect-fourth"
-                  id="chartPreferences"
-                >
+                <div className="ct-chart" id="chartActivity">
                   <ChartistGraph
                     data={{
-                      labels: ["20", "20", "10", "10","10", "10", "10","10"],
-                      series: [20, 20, 10, 10, 10, 10, 10, 10],
+                      labels: [
+                        "A+",
+                        "A-",
+                        "B+",
+                        "B-",
+                        "O+",
+                        "O-",
+                        "AB+",
+                        "AB-"
+                      ],
+                      series: [
+                        [
+                          userCount[0],
+                          userCount[1],
+                          userCount[2],
+                          userCount[3],
+                          userCount[4],
+                          userCount[5],
+                          userCount[6],
+                          userCount[7]
+                        ],
+                      ]
                     }}
-                    type="Pie"
+                    type="Bar"
+                    options={{
+                      seriesBarDistance: 10,
+                      axisX: {
+                        showGrid: false,
+                      },
+                      height: "245px",
+                    }}
+                    responsiveOptions={[
+                      [
+                        "screen and (max-width: 640px)",
+                        {
+                          seriesBarDistance: 5,
+                          axisX: {
+                            labelInterpolationFnc: function (value) {
+                              return value[0];
+                            },
+                          },
+                        },
+                      ],
+                    ]}
                   />
                 </div>
-                <div className="legend">
-                  <i className="fas fa-circle text-info"></i>A+ &nbsp;&nbsp;&nbsp;
-                  <i className="fas fa-circle text-danger"></i>A-&nbsp;&nbsp;&nbsp;
-                  <i className="fas fa-circle text-warning"></i>B+&nbsp;&nbsp;&nbsp;
-                  <i className="fas fa-circle text-dark"></i>B-&nbsp;&nbsp;&nbsp;
-                  <i className="fas fa-circle text-muted"></i>O+&nbsp;&nbsp;&nbsp;
-                  <i className="fas fa-circle text-primary"></i>O-&nbsp;&nbsp;&nbsp;
-                  <i className="fas fa-circle text-secondary"></i>AB+&nbsp;&nbsp;&nbsp;
-                  <i className="fas fa-circle text-success"></i>AB-&nbsp;&nbsp;&nbsp;
+                <div>
+                  <label>A+ = {userCount[0]}</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  <label>A- = {userCount[1]}</label><br/>
+                  <label>B+ = {userCount[2]}</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  <label>B- = {userCount[3]}</label><br/>
+                  <label>O+ = {userCount[4]}</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  <label>O- = {userCount[5]}</label><br/>
+                  <label>AB+ = {userCount[6]}</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                  <label>AB- = {userCount[7]}</label>
                 </div>
               </Card.Body>
+              <Card.Footer>
+                <div className="legend">
+                  <i className="fas fa-circle text-info"></i>
+                  Total Bottles Donated
+                </div>
+              </Card.Footer>
             </Card>
           </Col>
-
           <Col md="7">
             <Card>
               <Card.Header>
@@ -261,18 +359,18 @@ function Dashboard() {
                       ],
                       series: [
                         [
-                          412,
-                          243,
-                          280,
-                          580,
-                          453,
-                          353,
-                          300,
-                          364,
-                          368,
-                          410,
-                          636,
-                          695,
+                          userRevenue[1],
+                          userRevenue[2],
+                          userRevenue[3],
+                          userRevenue[4],
+                          userRevenue[5],
+                          userRevenue[6],
+                          userRevenue[7],
+                          userRevenue[8],
+                          userRevenue[9],
+                          userRevenue[10],
+                          userRevenue[11],
+                          userRevenue[12],
                         ],
                       ]
                     }}
@@ -282,7 +380,7 @@ function Dashboard() {
                       axisX: {
                         showGrid: false,
                       },
-                      
+
                       height: "245px",
                     }}
                     responsiveOptions={[

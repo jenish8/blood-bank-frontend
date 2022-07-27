@@ -8457,10 +8457,10 @@
   "resolved" "https://registry.npmjs.org/react-toast/-/react-toast-1.0.3.tgz"
   "version" "1.0.3"
 
-"react-toastify@^9.0.5":
-  "integrity" "sha512-dszPCeQINY+Nm6HmsiAXT/7wsazPqv0S/RuhIYLAW+fTKcd3T1iRjZG0XqrN9nvAzqaE5J6uxMaiBrOevxjY8g=="
-  "resolved" "https://registry.npmjs.org/react-toastify/-/react-toastify-9.0.5.tgz"
-  "version" "9.0.5"
+"react-toastify@^9.0.6":
+  "integrity" "sha512-ISwZx8o+FmlT9mHuK/vJP3m3K6VOZR3i9W40xod/xxxNutIJHRBPE1AZa5lJFjzwMUURXnkHg1F1E672fJMNJA=="
+  "resolved" "https://registry.npmjs.org/react-toastify/-/react-toastify-9.0.6.tgz"
+  "version" "9.0.6"
   dependencies:
     "clsx" "^1.1.1"
 

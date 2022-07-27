@@ -44,6 +44,43 @@ function Recipient() {
       })
   }
 
+  async function reject(event) {
+    const id= event.target.value;
+    console.log(id);
+    const url = `http://localhost:4000/user/reject/${id}`;
+    const result = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+
+    const res = await result.json();
+    console.log(res);
+    setUserList(res);
+    fetchData();
+  }
+
+  async function accept(event) {
+    const id= event.target.value;
+    console.log(id);
+    const url = `http://localhost:4000/user/accept/${id}`;
+    const result = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+
+    const res = await result.json();
+    if(res.err)
+      console.log("Not in stock");
+    else{
+      setUserList(res);
+      fetchData();
+    }
+  }
+
   async function fetchUsername(event) {
     
     const url = `http://localhost:4000/user/recipient-find`;
@@ -122,8 +159,9 @@ function Recipient() {
                                 <td>{row.quantity}</td>
                                 <td>{row.requestedDate}</td>
                                 <td>{row.supplyDate}</td>
-                                <td><button type="button" class="btn btn-success">Accept</button></td>
-                                <td><button type="button" class="btn btn-danger">Reject</button></td>
+                                
+                                <td><button type="button" class="btn btn-success" value={row._id} disabled={row.isAccepted} onClick={accept}>Accept</button></td>
+                                <td><button type="button" class="btn btn-danger" value={row._id} disabled={row.isAccepted} onClick={reject}>Reject</button></td>
                               </tr>
                             );
                           })}

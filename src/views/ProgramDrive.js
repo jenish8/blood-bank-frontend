@@ -45,6 +45,40 @@ function ProgramDrive() {
       })
   }
 
+  async function accept(event) {
+    const id= event.target.value;
+    console.log(id);
+    const url = `http://localhost:4000/drive/accept/${id}`;
+    const result = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+
+    const res = await result.json();
+    console.log(res);
+    setUserList(res);
+    fetchData();
+  }
+
+  async function reject(event) {
+    const id= event.target.value;
+    console.log(id);
+    const url = `http://localhost:4000/drive/reject/${id}`;
+    const result = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+
+    const res = await result.json();
+    console.log(res);
+    setUserList(res);
+    fetchData();
+  }
+
   async function fetchProgramname(event) {
     
     const url = `http://localhost:4000/drive/program-find`;
@@ -145,8 +179,8 @@ function ProgramDrive() {
                                 <td onLoad={fetchName(row.contactNumber)} hidden="hidden"></td>
                                 <td>{name}</td>
                                 <td>{row.contactNumber}</td>
-                                <td><button type="button" class="btn btn-success">Accept</button></td>
-                                <td><button type="button" class="btn btn-danger">Reject</button></td>
+                                <td><button type="button" class="btn btn-success" disabled={row.isAccepted} value={row._id} onClick={accept}>Accept</button></td>
+                                <td><button type="button" class="btn btn-danger" disabled={row.isAccepted} value={row._id} onClick={reject}>Reject</button></td>
 
                               </tr>
                             );

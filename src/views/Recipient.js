@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, Route, Routes } from "react-router-dom";
-
+import moment from "moment";
 import AdminNavbar from "../components/Admin/Navbars/AdminNavbar";
 import Footer from "../components/Admin/Footer/Footer";
 import Sidebar from "../components/Admin/Sidebar/Sidebar";
@@ -36,6 +36,10 @@ function Recipient() {
     await fetch("http://localhost:4000/user/recipient-all")
       .then((res) => res.json())
       .then((result) => {
+        result.forEach(obj=>{
+          obj.requestedDate = moment(obj.requestedDate).format('DD/MM/YY');
+          obj.supplyDate = moment(obj.supplyDate).format('DD/MM/YY');
+        })
         setUserList(result);
       })
   }
@@ -55,7 +59,10 @@ function Recipient() {
         })
 
     const res = await result.json();
-    console.log(res);
+    res.forEach(obj=>{
+      obj.requestedDate = moment(obj.requestedDate).format('DD/MM/YY');
+      obj.supplyDate = moment(obj.supplyDate).format('DD/MM/YY');
+    });    
     setUserList(res);
   }
 

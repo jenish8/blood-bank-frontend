@@ -39,6 +39,9 @@ function BloodBottles() {
         setUserList(result);
       })
   }
+
+  
+
   async function fetchBloodGroup(event) {
     console.log(event.target.value);
     const url = `http://localhost:4000/bloodBottle/blood-find`;

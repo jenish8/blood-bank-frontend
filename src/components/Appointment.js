@@ -29,7 +29,7 @@ function Appointment() {
     const [age, setAge] = useState("");
     const [weight, setWeight] = useState();
     const [errors, setErrors] = useState({})
-    //console.log(bloodGroup);
+    console.log(appointmentDate);
 
     
     // const handleChange = (event) => {

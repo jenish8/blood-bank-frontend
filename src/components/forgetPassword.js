@@ -97,14 +97,14 @@ const ForgetPassword = () => {
         console.log(data);
         sessionStorage.setItem('otp',data);
         //sessionStorage.getItem('otp')
-        
+        navigate('/otp');
       
            
           
             
         
 
-              navigate('/otp');
+             
             
     }
 

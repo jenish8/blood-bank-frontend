@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import moment from "moment";
+import Modal from 'react-bootstrap/Modal';
+
 import ChartistGraph from "react-chartist";
 // react-bootstrap components
 import {
@@ -29,8 +31,12 @@ function Dashboard() {
   const [userCount, setCount] = useState([]);
   const [userStock, setStock] = useState([]);
   const [userMoDo, setMoDo] = useState([]);
+  const [show, setShow] = useState(false);
+  var row_count = 0;
 
   const location = useLocation();
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
 
 
   async function fetchDonations() {
@@ -149,16 +155,54 @@ function Dashboard() {
             <Card className="card-stats">
               <Card.Body>
                 <Row>
-                  <Col xs="5">
+                  <Col xs="5" onClick={handleShow}>
                     <div className="icon-big text-center icon-warning">
                       <i className="nc-icon nc-vector text-danger"></i>
                     </div>
                   </Col>
                   <Col xs="7">
-                    <div className="numbers">
+                    <div className="numbers" >
                       <p className="card-category">Stock Recession</p>
-                      <Card.Title as="h4">23</Card.Title>
                     </div>
+                    <Modal show={show} onHide={handleClose}>
+                      <Modal.Header closeButton>
+                        <Modal.Title>Stock Recession Details</Modal.Title>
+                      </Modal.Header>
+                      <Modal.Body>
+                        <Card className="card-plain table-plain-bg">
+                          <Card.Header>
+                            <Card.Title as="h4">User Database</Card.Title>
+                          </Card.Header>
+                          <Card.Body className="table-full-width table-responsive px-0">
+                            <Table className="table-hover">
+                              <thead>
+                                <tr>
+                                  <th className="border-0">Stock Name</th>
+                                  <th className="border-0">Quantity</th>
+                                </tr>
+                              </thead>
+                              <tbody>
+                                {userStock && userStock.map(row => {
+                                  return (
+                                    <tr key={row_count}>
+                                      <td>{row.stockName}</td>
+                                      <td>{row.quantity}</td>
+                                    </tr>
+                                  );
+                                })}
+                              </tbody>
+                            </Table>
+                          </Card.Body>
+                        </Card>
+
+                        {/* <strong>Stock Name:</strong> <strong>Stock Quantity:</strong> */}
+                      </Modal.Body>
+                      <Modal.Footer>
+                        <Button variant="secondary" onClick={handleClose}>
+                          Close
+                        </Button>
+                      </Modal.Footer>
+                    </Modal>
                   </Col>
                 </Row>
               </Card.Body>
@@ -243,11 +287,11 @@ function Dashboard() {
                 </div>
                 <div>
                   <label>A+ = {userCount[0]}</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                  <label>A- = {userCount[1]}</label><br/>
+                  <label>A- = {userCount[1]}</label><br />
                   <label>B+ = {userCount[2]}</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                  <label>B- = {userCount[3]}</label><br/>
+                  <label>B- = {userCount[3]}</label><br />
                   <label>O+ = {userCount[4]}</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                  <label>O- = {userCount[5]}</label><br/>
+                  <label>O- = {userCount[5]}</label><br />
                   <label>AB+ = {userCount[6]}</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                   <label>AB- = {userCount[7]}</label>
                 </div>

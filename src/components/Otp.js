@@ -1,28 +1,17 @@
 import React from "react";
 import validator from "validator";
-import { Link } from "react-router-dom";
-import bloodcover from "../images/blood1.jpg";
+import { Link, Navigate } from "react-router-dom";
+import bloodcover from "../images/blood1.jpg"
 import { useState, useEffect } from "react";
-import ChangePassword from "./ChangePassword";
 import {Routes, Route, useNavigate} from 'react-router-dom';
 
 
-const ForgetPassword = () => {
-    const navigate = useNavigate();
-    // document.title = "Registration- BloodBank.com"
 
-    // const formInitialValue = {
-    //     firstName: "",
-    //     lastName: "",
-    //     email: "",
-    //     password: "",
-    //     confirmPassword: "",
-    //     mobileNumber: "",
-    //     dob: "",
-    //     aadharNumber: "",
-    //     gender: "",
-    //     address: ""
-    // }
+
+const Otp = () => {
+    
+    const valueOfOtp = sessionStorage.getItem('otp');
+    const navigate = useNavigate();
     // const [values, setValues] = useState(formInitialValue)
     // const [sucessMessage, setMessage] = useState("")
     // const [errors, setErrors] = useState({})
@@ -73,50 +62,67 @@ const ForgetPassword = () => {
     //         }
     //     }
     // }
-    const [username, setusername] = useState("");
-    const [errors, setErrors] = useState({})
+    const [otp, setotp] = useState("");
+    const [errors, setErrors] = useState({});
 
-    async function checkUser(event)
+    async function checkOTP(event)
     {
+       
         event.preventDefault();
         let errs = validateForm();
         setErrors(errs)
-        console.log(username);
-        const result = await fetch('http://localhost:4000/appointment/checkmail', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                username
-                
-            }),
-        })
 
-        const data = await result.json();
-        console.log(data);
-        sessionStorage.setItem('otp',data);
+      
+
+
+       
+        // console.log(username);
+        // const result = await fetch('http://localhost:4000/appointment/checkmail', {
+        //     method: 'POST',
+        //     headers: {
+        //         'Content-Type': 'application/json',
+        //     },
+        //     body: JSON.stringify({
+        //         username
+                
+        //     }),
+        // })
+
+        // const data = await result.json();
+        // console.log(data);
+        // sessionStorage.setItem('otp',data);
         //sessionStorage.getItem('otp')
-        navigate('/otp');
+        
       
            
           
             
         
 
-             
+              
             
     }
 
+
+
     const validateForm = () => {
         let err = {}
-        if (!username) {
-            err.username = "Name is required."
+        if (!otp) {
+            err.otp = "Enter four digit OTP"
+        }
+
+        if(valueOfOtp!=otp){
+            err.otp = "Invalid OTP"
+        }
+        
+        if(valueOfOtp==otp)
+        {
+            navigate('/changepassword')
         }
 
         return err;
     }
-    
+
   return  <div style={{backgroundColor:"#f2f2f2", minHeight:"100vh"}}>
   <div className="container">
       <div className="row justify-content-center my-4">
@@ -127,27 +133,27 @@ const ForgetPassword = () => {
               <div className="p-3">
                   <div className="d-flex">
                       <div className="w-100">
-                          <h3 className="mb-4 h1">Forget Password </h3>
+                          <h3 className="mb-4 h1">OTP Authentication</h3>
                       </div>
                   </div>
-                  <form onSubmit={checkUser} name="signup">
-                      <div className="form-group my-3 text-start">
-                          <label className="form-control-placeholder">Username</label>
-                          <input type="text"
-                              className={`form-control  `}
-                              value={username}  onChange={(e)=>setusername(e.target.value)} />
-                               {errors.username && <div className="alert-danger my-3 p-2">{errors.username}</div>}
-                          {/* {errors.firstName && <div className="alert-danger my-3 p-2">{errors.firstName}</div>} */}
-                      </div>
-                      {/* <div className="form-group my-3 text-start">
-                          <label className="form-control-placeholder">Last Name</label>
-                          <input type="text" className={`form-control  `}
-                              name="lastName"  onChange={'#'} />
-                          {errors.lastName && <div className="alert-danger my-3 p-2">{errors.lastName}</div>}
-                      </div> */}
+                  <form onSubmit={checkOTP} name="signup">
                       
 
-                     
+                      
+                    
+                      <div className="form-group my-3 text-start">
+                          <label className="form-control-placeholder">OTP</label>
+                          <input type="password" className={`form-control `} 
+                          value={otp}
+                          name="confirmPassword"
+                           onChange={(e)=>setotp(e.target.value)}
+                           />
+
+                        {errors.otp && <div className="alert-danger my-3 p-2">{errors.otp}</div>}
+
+                          
+                      </div>
+                      
 
                       {/* <div className="form-group my-3 text-start">
                           <label className="form-control-placeholder">Date Of Birth</label>
@@ -172,10 +178,10 @@ const ForgetPassword = () => {
                           <label className='ms-3'>Female</label>
                           <input type="radio" className={`ms-2  `} name="gender" value="female" />
                       </div> */}
-                      
+                     
 
                       <div className="form-group my-3">
-                          <button type="submit" onSubmit={checkUser} className="form-control btn btn-primary rounded submit px-3">Submit</button>
+                          <button type="submit" className="form-control btn btn-primary rounded submit px-3">Check OTP </button>
                       </div>
                       <div className="form-group mt-5">
                           
@@ -189,4 +195,4 @@ const ForgetPassword = () => {
 </div>
 };
 
-export default ForgetPassword;
+export default Otp;

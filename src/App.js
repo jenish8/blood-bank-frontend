@@ -11,11 +11,9 @@ import ChangePassword from './components/ChangePassword';
 import R_Register from './components/R_Register';
 import Wallet from './components/Wallet';
 import D_Register from './components/D_Register';
-<<<<<<< HEAD
 import { VerifyUser } from './components/verifyUser';
-=======
 import Otp from './components/Otp';
->>>>>>> b6d61431026f4a3309476c9f7474695807d06147
+
 
 import { ToastContainer, toast } from "react-toastify";
 

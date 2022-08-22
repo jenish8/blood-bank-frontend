@@ -11,8 +11,10 @@ import ChangePassword from './components/ChangePassword';
 import R_Register from './components/R_Register';
 import Wallet from './components/Wallet';
 import D_Register from './components/D_Register';
+import { VerifyUser } from './components/verifyUser';
 import Otp from './components/Otp';
 import Login from './components/Login'
+
 
 import { ToastContainer, toast } from "react-toastify";
 
@@ -65,6 +67,9 @@ class App extends React.Component {
 					<Route path='/appointment' element={<Appointment />} />
 					<Route path='/forgetpassword' element={<ForgetPassword/>}/>
 					<Route path='/changepassword' element={<ChangePassword/>}/>
+					<Route path="/user/verify-account/:token/:userName" element={<VerifyUser notify={notify}/>} />
+					<Route path='/wallet/:userName' element={<Wallet notify={notify}/>} />
+
 					<Route path='/wallet' element={<Wallet />} />
 					<Route path='/otp' element={<Otp />} />
 					<Route path='/login' element={<Login />} />
@@ -99,6 +104,7 @@ class App extends React.Component {
 				<Route path="/admin/bottles" element={<BloodBottlesLayout />} />
 				<Route path="/admin/prerequesites" element={<PrerequesitesLayout />} />
 				</Routes>
+				<ToastContainer autoClose={5000} pauseOnHover={true} />
 			</BrowserRouter>
 
 		);

@@ -20,7 +20,8 @@ const ChangePassword = () => {
         setErrors(errs)
 
 
-        const username = sessionStorage.getItem("username");
+        //const username = sessionStorage.getItem("username");
+        const username = "Sheryy";
         const url = `http://localhost:4000/user/updateUser/${username}`;
         const result = await fetch(url, {
             method: 'PUT',

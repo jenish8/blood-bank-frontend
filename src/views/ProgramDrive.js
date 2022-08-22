@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, Route, Routes } from "react-router-dom";
-
+import moment from "moment";
 import AdminNavbar from "../components/Admin/Navbars/AdminNavbar";
 import Footer from "../components/Admin/Footer/Footer";
 import Sidebar from "../components/Admin/Sidebar/Sidebar";
@@ -38,8 +38,45 @@ function ProgramDrive() {
     await fetch("http://localhost:4000/drive/all")
       .then((res) => res.json())
       .then((result) => {
+        result.forEach(obj=>{
+          obj.programDate = moment(obj.programDate).format('DD/MM/YY')
+        })
         setUserList(result);
       })
+  }
+
+  async function accept(event) {
+    const id= event.target.value;
+    console.log(id);
+    const url = `http://localhost:4000/drive/accept/${id}`;
+    const result = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+
+    const res = await result.json();
+    console.log(res);
+    setUserList(res);
+    fetchData();
+  }
+
+  async function reject(event) {
+    const id= event.target.value;
+    console.log(id);
+    const url = `http://localhost:4000/drive/reject/${id}`;
+    const result = await fetch(url, {
+            method: 'GET',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+        })
+
+    const res = await result.json();
+    console.log(res);
+    setUserList(res);
+    fetchData();
   }
 
   async function fetchProgramname(event) {
@@ -57,7 +94,9 @@ function ProgramDrive() {
         })
 
     const res = await result.json();
-    console.log(res);
+    res.forEach(obj=>{
+      obj.programDate = moment(obj.programDate).format('DD/MM/YY')
+    })
     setUserList(res);
   }
 
@@ -140,8 +179,8 @@ function ProgramDrive() {
                                 <td onLoad={fetchName(row.contactNumber)} hidden="hidden"></td>
                                 <td>{name}</td>
                                 <td>{row.contactNumber}</td>
-                                <td><button type="button" class="btn btn-success">Accept</button></td>
-                                <td><button type="button" class="btn btn-danger">Reject</button></td>
+                                <td><button type="button" class="btn btn-success" disabled={row.isAccepted} value={row._id} onClick={accept}>Accept</button></td>
+                                <td><button type="button" class="btn btn-danger" disabled={row.isAccepted} value={row._id} onClick={reject}>Reject</button></td>
 
                               </tr>
                             );

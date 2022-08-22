@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useLocation, Route, Routes } from "react-router-dom";
-
+import moment from "moment";
 import AdminNavbar from "../components/Admin/Navbars/AdminNavbar";
 import Footer from "../components/Admin/Footer/Footer";
 import Sidebar from "../components/Admin/Sidebar/Sidebar";
@@ -36,6 +36,10 @@ function Donor() {
     await fetch("http://localhost:4000/user/donor-all")
       .then((res) => res.json())
       .then((result) => {
+        console.log(result);
+        result.forEach(obj=>{
+          obj.dateOfBirth = moment(obj.dateOfBirth).format('DD/MM/YY')
+        })
         setUserList(result);
       })
   }
@@ -55,7 +59,9 @@ function Donor() {
         })
 
     const res = await result.json();
-    console.log(res);
+    res.forEach(obj=>{
+      obj.dateOfBirth = moment(obj.dateOfBirth).format('DD/MM/YY')
+    })
     setUserList(res);
   }
 

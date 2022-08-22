@@ -11,7 +11,11 @@ import ChangePassword from './components/ChangePassword';
 import R_Register from './components/R_Register';
 import Wallet from './components/Wallet';
 import D_Register from './components/D_Register';
+<<<<<<< HEAD
 import { VerifyUser } from './components/verifyUser';
+=======
+import Otp from './components/Otp';
+>>>>>>> b6d61431026f4a3309476c9f7474695807d06147
 
 import { ToastContainer, toast } from "react-toastify";
 
@@ -66,6 +70,9 @@ class App extends React.Component {
 					<Route path='/changepassword' element={<ChangePassword/>}/>
 					<Route path="/user/verify-account/:token/:userName" element={<VerifyUser notify={notify}/>} />
 					<Route path='/wallet/:userName' element={<Wallet notify={notify}/>} />
+
+					<Route path='/wallet' element={<Wallet />} />
+					<Route path='/otp' element={<Otp />} />
 					<Route path='/' element={
 						<>
 							<div className='App'>

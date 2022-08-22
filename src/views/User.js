@@ -59,11 +59,12 @@ function User() {
     setUserList(res);
   }
 
-  async function delUsername(event) {
+  async function changeStatus(event) {
     const username=event.target.value;
-    const url = `http://localhost:4000/user/delete/${username}`;
+    const check=event.target.checked;
+    const url = `http://localhost:4000/user/change-status/${username}/${check}`;
     const result = await fetch(url, {
-            method: 'DELETE',
+            method: 'PUT',
             headers: {
                 'Content-Type': 'application/json',
             }
@@ -115,21 +116,19 @@ function User() {
                             <th className="border-0">Email</th>
                             <th className="border-0">Contact No</th>
                             <th className="border-0">Address Line</th>
-                            <th className="border-0">Pincode</th>
-                            <th className="border-0">Drop</th>
+                            <th className="border-0">Active Status</th>
                           </tr>
                         </thead>
                         <tbody>
                           {userList && userList.map(row => {
                             return (
                               <tr key={row_count}>
-                                <td>{row.username}</td>
+                                <td>{row.userName}</td>
                                 <td>{row.name}</td>
                                 <td>{row.email}</td>
                                 <td>{row.contactNumber}</td>
-                                <td>{row.addressLine}</td>
-                                <td>{row.pincode}</td>
-                                <td><button type="button" class="btn btn-danger" value={row.username} onClick={delUsername}>Drop</button></td>
+                                <td>{row.address}</td>
+                                <td><input type="checkbox" class="btn btn-danger" defaultChecked={row.isActive} value={row.userName} name={row.isActive} onChange={changeStatus}/></td>
                               </tr>
                             );
                           })}

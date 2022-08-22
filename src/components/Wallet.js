@@ -1,81 +1,91 @@
 import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom"
+
 // import Navigation from "./Navigation";
 import withdraw from "../../src/components/images/money-withdrawal.png";
 
 import purse from "../../src/components/images/purse.png";
 // import Footer from "./Footer"
-const Wallet = () => {
+const Wallet = ({notify}) => {
 
-    // document.title = "Wallet - AuctionPoint.com"
+    document.title = "Wallet - BloodBank.com"
 
-    // const [wallet, setWallet] = useState();
-    // const [isLoading, setIsLoading] = useState(true);
-    // const userid = sessionStorage.getItem("user");
+    const [wallet, setWallet] = useState();
+    const [isLoading, setIsLoading] = useState(true);
+    // const userName = sessionStorage.getItem("user");
+    const {userName,token} = useParams()
 
-    // useEffect(async () => {
-    //     await fetch(`https://auctionpointbackend.herokuapp.com/wallet/${userid}`)
-    //         .then((res) => res.json())
-    //         .then((json) => {
-    //             setWallet(json.amount);
-    //             setIsLoading(false);
-    //         });
-    // }, []);
+    console.log(userName)
 
-    // const addMoney = async () => {
-    //   //add money
-    //   if (parseInt(document.getElementById("add-amount").value) < 0 || parseInt(document.getElementById("add-amount").value) === 0) {
-    //     notify("Invalid amount");
-    //     return;
-    //   }
-    //   let amount = wallet + parseInt(document.getElementById("add-amount").value);
-    //   let result = await fetch(
-    //     `https://auctionpointbackend.herokuapp.com/wallet/updateWallet/${userid}`,
-    //     {
-    //       method: "PUT",
-    //       headers: {
-    //         "Content-Type": "application/json",
-    //         Accept: "application/json",
-    //       },
-    //       body: JSON.stringify({ amount: amount }),
-    //     }
-    //   );
-    //   result = await result.json();
-    //   // console.log(result);
-    //   setWallet(result.amount)
-    //   document.getElementsByClassName('btn-close')[0].click();
-    // };
+    useEffect(async () => {
+        await fetch(`http://localhost:4000/wallet/${userName}`)
+            .then((res) => res.json())
+            .then((json) => {
+                setWallet(json.amount);
+                setIsLoading(false);
+            });
+    }, []);
 
-    // const withdrawMoney = async () => {
-    //   let amt = parseInt(document.getElementById("withdraw-amount").value);
-    //   if (amt < 0 || amt === 0) {
-    //     notify("Invalid amount");
-    //     return;
-    //   }
-    //   if (amt > wallet) {
-    //     notify("Insufficient Balance.");
-    //   } else {
-    //     let amount = wallet - amt;
-    //     let result = await fetch(
-    //       `https://auctionpointbackend.herokuapp.com/wallet/updateWallet/${userid}`,
-    //       {
-    //         method: "PUT",
-    //         headers: {
-    //           "Content-Type": "application/json",
-    //           Accept: "application/json",
-    //         },
-    //         body: JSON.stringify({ amount: amount }),
-    //       }
-    //     );
-    //     result = await result.json();
-    //   //   console.log(result);
-    //       setWallet(result.amount)
-    //     document.getElementById('withdraw-close').click();
-    //   }
-    // };
+    const addMoney = async () => {
+      //add money
+      if (parseInt(document.getElementById("add-amount").value) < 0 || parseInt(document.getElementById("add-amount").value) === 0) {
+        notify("Invalid amount");
+        return;
+      }
+      let amount = wallet + parseInt(document.getElementById("add-amount").value);
+      let result = await fetch(
+        `http://localhost:4000/wallet/updateWallet/${userName}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify({ amount: amount }),
+        }
+      );
+      result = await result.json();
+      // console.log(result);
+      setWallet(result.amount)
+      document.getElementsByClassName('btn-close')[0].click();
+    };
+
+    const withdrawMoney = async () => {
+      let amt = parseInt(document.getElementById("withdraw-amount").value);
+      if (amt < 0 || amt === 0) {
+        notify("Invalid amount");
+        return;
+      }
+      if (amt > wallet) {
+        notify("Insufficient Balance.");
+      } else {
+        let amount = wallet - amt;
+        let result = await fetch(
+          `http://localhost:4000/wallet/updateWallet/${userName}`,
+          {
+            method: "PUT",
+            headers: {
+              "Content-Type": "application/json",
+              Accept: "application/json",
+            },
+            body: JSON.stringify({ amount: amount }),
+          }
+        );
+        result = await result.json();
+      //   console.log(result);
+          setWallet(result.amount)
+        document.getElementById('withdraw-close').click();
+      }
+    };
 
     return (
         <div>
-            
+            {/* <Navigation /> */}
+            {isLoading ? (
+                <div className="container-fluid min-vh-100 d-flex align-items-center justify-content-center">
+                    <div className="spinner-border text-primary"></div>
+                </div>
+            ) : (
                 <div className="container">
                     <div className="card my-5">
                         <h5 className="card-header">Your Wallet</h5>
@@ -84,10 +94,11 @@ const Wallet = () => {
                                 className="card-title h1"
                                 style={{ fontSize: "5rem" }}
                             >
-                                ₹500
+                                ₹ {wallet}
                             </h5>
                             <p className="card-text">
-                                This reflects your current balance 
+                                This reflects your current balance of
+                                BloodBank wallet.
                             </p>
                         </div>
                     </div>
@@ -103,7 +114,7 @@ const Wallet = () => {
                                         <img src={purse} alt="" height={100} />
                                     </h5>
                                     <p className="card-text">
-                                        Add money to your wallet 
+                                        Add money to your wallet to pay for the blood requested
                                     </p>
                                     <button
                                         className="btn btn-primary"
@@ -112,6 +123,7 @@ const Wallet = () => {
                                     >
                                         Add Money
                                     </button>
+
                                 </div>
                             </div>
                         </div>
@@ -130,16 +142,15 @@ const Wallet = () => {
                                         />
                                     </h5>
                                     <p className="card-text">
-                                        Withdraw money from your account{" "}
+                                        Withdraw money from your BloodBank to get your balance back.{" "}
                                     </p>
                                     <button
                                         className="btn btn-primary"
                                         type="button"
                                         data-bs-toggle="modal"
                                         data-bs-target="#WithdrawMoney"
-                                        fontSize="10px"
                                     >
-                                    Withdraw Money
+                                        Withdraw Money
                                     </button>
                                 </div>
                             </div>
@@ -149,6 +160,7 @@ const Wallet = () => {
             </div> */}
                     </div>
                 </div>
+            )}
 
             {/*  */}
             {/* Add money */}
@@ -195,7 +207,7 @@ const Wallet = () => {
                             <button
                                 type="button"
                                 className="btn btn-primary"
-                                // onClick={addMoney}
+                                onClick={addMoney}
                             >
                                 Add
                             </button>
@@ -252,7 +264,7 @@ const Wallet = () => {
                             <button
                                 type="button"
                                 className="btn btn-primary"
-                                // onClick={withdrawMoney}
+                                onClick={withdrawMoney}
                             >
                                 Withdraw
                             </button>
@@ -261,6 +273,8 @@ const Wallet = () => {
                 </div>
             </div>
             {/* <Footer/> */}
+
+            
         </div>
     );
 };

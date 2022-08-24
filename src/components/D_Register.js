@@ -1,74 +1,141 @@
 import React from "react";
 import validator from "validator";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 import bloodcover from "../images/blood1.jpg"
 
 
 const D_Register = () => {
-    // document.title = "Registration- BloodBank.com"
+    document.title = "Registration- BloodBank.com"
 
-    // const formInitialValue = {
-    //     firstName: "",
-    //     lastName: "",
-    //     email: "",
-    //     password: "",
-    //     confirmPassword: "",
-    //     mobileNumber: "",
-    //     dob: "",
-    //     aadharNumber: "",
-    //     gender: "",
-    //     address: ""
-    // }
-    // const [values, setValues] = useState(formInitialValue)
-    // const [sucessMessage, setMessage] = useState("")
-    // const [errors, setErrors] = useState({})
-    // const [dataIsCorrect, setDataIsCorrect] = useState(false)
+    const formInitialValue = {
+        dob:"",
+        aadharNumber: "",
+        gender: "",
+        bloodGroup: ""
+    }
+     const [values, setValues] = useState(formInitialValue)
+     const [sucessMessage, setMessage] = useState("")
+     const [errors, setErrors] = useState({})
+     const [dataIsCorrect, setDataIsCorrect] = useState(false)
 
-    // const handleChange = (event) => {
-    //     //console.log(event.target.value, event.target)
-    //     setValues({
-    //         ...values,
-    //         [event.target.name]: event.target.value
-    //     })
-    // }
+    const handleChange = (event) => {
+        //console.log(event.target.value, event.target)
+        setValues({
+            ...values,
+            [event.target.name]: event.target.value
+        })
+    }
 
-    // async function handleSubmit(event) {
-    //     //console.log("data ", event.target);
-    //     event.preventDefault()
-    //     // setErrors(validateForm(values))
-    //     let errs = validateForm(values)
-    //     // setDataIsCorrect(true)
-    //     setErrors(errs)
+    async function handleSubmit(event) {
+        console.log("data ", event.target);
+        event.preventDefault()
+        // setErrors(validateForm(values))
+        let errs = validateForm(values)
+        // setDataIsCorrect(true)
+        setErrors(errs)
+        console.log(errs);
+        if(Object.keys(errs).length===0){
+            const dateOfBirth = event.target.dob.value;
+            const aadharNumber = event.target.aadharNumber.value;
+            console.log("fn ");
+            const gender = event.target.gender.value;
+            const bloodGroup = event.target.bloodGroup.value;
+            const username="jen_"
+            let item = { username,dateOfBirth,aadharNumber,gender,bloodGroup }
+            console.warn(item)
+            let result = await fetch("http://localhost:4000/user/d_register", {
+                method: 'POST',
+                body: JSON.stringify(item),
+                headers: {
+                    "Content-Type": 'application/json',
+                    "Accept": 'application/json'
+                }
+            })
 
-    //     if(Object.keys(errs).length===0){
-    //         const firstName = event.target.firstName.value;
-    //         //console.log("fn ",firstName);
-    //         const lastName = event.target.lastName.value;
-    //         const dob = event.target.dob.value;
-    //         const email = event.target.email.value;
-    //         const mobileNumber = event.target.mobileNumber.value;
-    //         const password = event.target.password.value;
-    //         const aadharNumber = event.target.aadharNumber.value;
-    //         const address = event.target.address.value;
-    //         const gender = event.target.gender.value;
+            result = await result.json()
+            console.log(result);
+            // if(result.message === 'Record created successfully.'){
+            //     notify("Account verification link has been sent to your mail.")
+            // }
+        }
+        else
+        {
+            console.log("hii")
+        }
+    }
 
-    //         let item = { firstName, lastName, dob, email, mobileNumber, password, aadharNumber, address, gender }
-    //         // console.warn(item)
-    //         let result = await fetch("https://auctionpointbackend.herokuapp.com/user/register", {
-    //             method: 'POST',
-    //             body: JSON.stringify(item),
-    //             headers: {
-    //                 "Content-Type": 'application/json',
-    //                 "Accept": 'application/json'
-    //             }
-    //         })
+    const validateForm = (values) => {
+        let err = {}
+        if (!values.dob) {
+            err.name = "Date of Birth is required."
+        }
+        if (!values.aadharNumber) {
+            err.userName = "Aadhar Number is required."
+        }
+        // if (!/\S+@\S+\.\S+/.test(values.email)) {
+        //     err.email = "Email is invalid"
+        // }
+        // if (!values.email) {
+        //     err.email = "Email is required."
+        // }
 
-    //         result = await result.json()
-    //         if(result.message === 'Record created successfully.'){
-    //             notify("Account verification link has been sent to your mail.")
-    //         }
-    //     }
-    // }
+        // if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,20}$/.test(values.password)) {
+        //     err.password = `At least 1 Uppercase. At least 1 Lowercase. At least 1 Number. Min 8 chars and Max 20 chars`
+        // }
+
+        if (!values.gender) {
+            err.gender = "Gender is required."
+        }
+        if (!values.bloodGroup) {
+            err.bloodGroup = "Blood Group is required."
+        }
+        // if (values.password !== values.confirmPassword) {
+        //     err.confirmPassword = "Password and confirm password not matching."
+        // }
+
+        // if (values.contactNumber.length !== 10) {
+        //     err.contactNumber = "Contact number must be of 10 digit."
+        // }
+
+        // if (!values.contactNumber) {
+        //     err.contactNumber = "Contact number is required."
+        // }
+
+        if (values.aadharNumber.length !== 12) {
+            err.aadharNumber = "Aadhar number must be of 12 digit."
+        }
+        // if (!values.aadharNumber) {
+        //     err.aadharNumber = "Aadhar number is required."
+        // }
+
+        // if (!values.gender) {
+        //     err.gender = "Gender is required."
+        // }
+
+        if (!validator.isDate(values.dob)) {
+            err.dob = "Invalid date."
+        }
+
+        // if (!values.dob) {
+        //     err.dob = "Date Of Birth is required."
+        // }
+
+        // if (!values.profile.match(/\.(jpg|jpeg|png)$/)) {
+        //     err.profile = "Please select an image file only."
+        // }
+
+        // if (!values.profile) {
+        //     err.profile = "Please select an image file."
+        // }
+
+
+        // if (!values.address) {
+        //     err.address = "Address is required."
+        // }
+        return err
+    }
+
     
   return  <div style={{backgroundColor:"#f2f2f2", minHeight:"100vh"}}>
   <div className="container">
@@ -83,7 +150,7 @@ const D_Register = () => {
                           <h3 className="mb-4 h1">Donor : Sign Up</h3>
                       </div>
                   </div>
-                  <form onSubmit={'#'} name="signup">
+                  <form onSubmit={handleSubmit} name="signup">
                       {/* <div className="form-group my-3 text-start">
                           <label className="form-control-placeholder">Name</label>
                           <input type="text"
@@ -124,27 +191,35 @@ const D_Register = () => {
 
                       <div className="form-group my-3 text-start">
                           <label className="form-control-placeholder">Date Of Birth</label>
-                          <input type="date" className={`form-control`} name="dob" />
+                          <input type="date"className={`form-control ${errors.dob ? "is-invalid" : ""} `}
+                          value={values.dob} onChange={handleChange} name="dob" />
+                          {errors.dob && <div className="alert-danger my-3 p-2">{errors.dob}
+                          </div>}
                       </div>
                       <div className="form-group my-3 text-start">
                           <label className="form-control-placeholder">Aadhar Number</label>
-                          <input type="text" className={`form-control `} name="aadharNumber"  />
+                          <input type="text" className={`form-control ${errors.aadharNumber ? "is-invalid" : ""} `}
+                          value={values.aadharNumber} onChange={handleChange} name="aadharNumber"  />
+                          {errors.aadharNumber && <div className="alert-danger my-3 p-2">{errors.aadharNumber}
+                          </div>}
                       </div>
                       {/* <div className="form-group my-3 text-start">
-                          <label className="form-control-placeholder">Profile Photo</label>
-                          <input type="file" accept="image/png, image/jpg, image/jpeg" className={`form-control ${errors.profile ? "is-invalid"
-                              : ""}`} name="profile" value={values.profile} onChange={handleChange} />
-                          {errors.profile && <div className="alert-danger my-3 p-2">{errors.profile}
+                          <label className="form-control-placeholder">Confirm Password</label>
+                          <input type="password" className={`form-control ${errors.confirmPassword ? "is-invalid" : ""} `} name="confirmPassword" 
+                           value={values.confirmPassword} onChange={handleChange} />
+                          {errors.confirmPassword && <div className="alert-danger my-3 p-2">{errors.confirmPassword}
                           </div>}
-                      </div> */}
-                      <div className="form-group my-3 text-start">
-                          <label className="form-control-placeholder">Gender</label>
-                          <br />
-                          <label>Male</label>
-                          <input type="radio" className={`ms-2  `} name="gender" value="male"   />
-                          <label className='ms-3'>Female</label>
-                          <input type="radio" className={`ms-2  `} name="gender" value="female" />
                       </div>
+                      </div>  */}
+                      <div className="form-group my-3 text-start">
+                                    <label className="form-control-placeholder">Gender</label>
+                                    <br />
+                                    <label>Male</label>
+                                    <input type="radio" className={`ms-2  `} name="gender" value="male" onChange={handleChange} checked={values.gender == "male"} />
+                                    <label className='ms-3'>Female</label>
+                                    <input type="radio" className={`ms-2  `} name="gender" value="female" onChange={handleChange} checked={values.gender == "female"} />
+                                    {errors.gender && <div className="alert-danger my-3 p-2">{errors.gender}</div>}
+                                </div>
                       {/* <div className="form-group my-3 text-start">
                           <label className="form-control-placeholder">Address</label>
                           <textarea className={`form-control`} name="address" />
@@ -152,7 +227,8 @@ const D_Register = () => {
                       </div> */}
                         <div className="form-group my-3 text start">
                             <label className="form-control-placeholder">Blood Group</label>
-                            <select className="{`form-control`}" name="bloodGroup">
+                            <select  name="bloodGroup" value={values.bloodGroup}
+                            className={`form-control ${errors.bloodGroup ? "is-invalid" : ""} `} onChange={handleChange}>
                                 <option>A+</option>
                                 <option>A-</option>
                                 <option>B+</option>
@@ -162,15 +238,16 @@ const D_Register = () => {
                                 <option>O+</option>
                                 <option>O-</option>
                             </select>
-                           
+                            {errors.bloodGroup && <div className="alert-danger my-3 p-2">{errors.bloodGroup}
+                          </div>}
                         </div>
                       <div className="form-group my-3">
-                          <button type="submit" className="form-control btn btn-primary rounded submit px-3">Sign
+                          <button type="submit" className="form-control btn btn-primary rounded submit px-3" >Sign
                               Up</button>
                       </div>
                       <div className="form-group mt-5">
                           <div className="w-100 text-center">
-                              <p>Not a member?
+                              <p>Already a member?
                                   {" "}<Link data-toggle="tab" to="/login">Sign In</Link>
                               </p>
                           </div>

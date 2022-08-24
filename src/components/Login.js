@@ -83,6 +83,7 @@ const Login = () => {
                                 <input className={`form-control ${errors.username ? "is-invalid" : ""}  `}
                                     name="username" value={values.username} onChange={handleChange} />
                                 {errors.username && <div className="alert-danger my-3 p-2">{errors.username}</div>}
+
                             </div>
 
                             <div className="form-group my-3 text-start">
@@ -104,7 +105,9 @@ const Login = () => {
                             </div>
                             <div className="form-group mt-5">
                                 <div className="w-100 text-center">
+
                                     <p>Forget Password ?
+
                                         {" "}<Link data-toggle="tab" to=" ">click here</Link>
                                     </p>
                                 </div>

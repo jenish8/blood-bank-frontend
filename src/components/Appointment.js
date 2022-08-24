@@ -29,7 +29,7 @@ function Appointment() {
     const [age, setAge] = useState("");
     const [weight, setWeight] = useState();
     const [errors, setErrors] = useState({})
-    //console.log(bloodGroup);
+    console.log(appointmentDate);
 
     
     // const handleChange = (event) => {
@@ -52,7 +52,7 @@ function Appointment() {
        
         
 
-       
+        console.log("date"+appointmentDate);
         const result = await fetch('http://localhost:4000/user/donation-add', {
             method: 'POST',
             headers: {
@@ -65,7 +65,7 @@ function Appointment() {
         })
 
         const data = await result.json();
-        console.log(data);
+        console.log("www"+data);
 
 
     }

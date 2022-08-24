@@ -32,6 +32,53 @@ function Donation() {
   const [userList, setUserList] = useState([])
   var row_count = 0;
 
+  async function accept(event) {
+    const id= event.target.value;
+    const username=event.target.name;
+    const url = `http://localhost:4000/user/find`;
+    const result = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              username,
+          }),
+        })
+
+    const res = await result.json();
+    const bloodGroup=res.bloodGroup;
+    const url1 = `http://localhost:4000/bloodBottle/add`;
+    const result1 = await fetch(url1, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              bloodGroup,
+          }),
+        })
+
+    const res1 = await result1.json();
+    console.log(res1._id);
+    const bottleId=res1._id;
+
+    const url2 = `http://localhost:4000/user/donated/${id}`;
+    const result2 = await fetch(url2, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+              bottleId,
+          }),
+        })
+
+    const res3 = await result2.json();
+    console.log(res3);
+    fetchData();
+  }
+
   async function fetchData() {
     await fetch("http://localhost:4000/user/donation-all")
       .then((res) => res.json())
@@ -104,8 +151,8 @@ function Donation() {
                           <tr>
                             <th className="border-0">Donor Username</th>
                             <th className="border-0">Donation Date</th>
-                            <th className="border-0">Program Id</th>
                             <th className="border-0">Blood Bottle Id</th>
+                            <th className="border-0">Done</th>
                           </tr>
                         </thead>
                         <tbody>
@@ -114,8 +161,8 @@ function Donation() {
                               <tr key={row_count}>
                                 <td>{row.username}</td>
                                 <td>{row.date}</td>
-                                <td>{row.programID}</td>
                                 <td>{row.bloodBottleId}</td>
+                                <td><button type="button" class="btn btn-success" disabled={row.hasDonated} value={row._id} name={row.username} onClick={accept}>Donate</button></td>
                               </tr>
                             );
                           })}

@@ -189,7 +189,7 @@ function Dashboard() {
           <Col md="5">
             <Card>
               <Card.Header>
-                <Card.Title as="h4">Monthly Donations</Card.Title>
+                <Card.Title as="h4">Blood Bottles Stock</Card.Title>
               </Card.Header>
               <Card.Body>
                 <div className="ct-chart" id="chartActivity">
@@ -255,7 +255,7 @@ function Dashboard() {
               <Card.Footer>
                 <div className="legend">
                   <i className="fas fa-circle text-info"></i>
-                  Total Bottles Donated
+                  Total Bottles 
                 </div>
               </Card.Footer>
             </Card>

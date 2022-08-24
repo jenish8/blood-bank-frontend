@@ -5,7 +5,6 @@ import bloodcover from "../images/blood1.jpg"
 
 const Login = () => {
 
-
     const formInitialValue = {
         username: "",
         password: "",
@@ -33,7 +32,7 @@ const Login = () => {
 
             let item = { userName, password }
             console.log(item);
-
+            
             let result = await fetch("http://localhost:4000/user/login", {
                 method: 'POST',
                 body: JSON.stringify(item),
@@ -43,12 +42,20 @@ const Login = () => {
                 }
             })
             
-            console.log("res :"+ result);
             if(result.status == 200){
-                console.log("token " + result.send.token);
-                console.log("message " + result.send.message);
+                result = await result.json();
+                console.log("token " + result.token);
+                console.log("message " + result.message);
+                sessionStorage.setItem("token",result.token);
+                
+                if(result.userName == "Admin"){
+                    console.log(result.userName);
+                    window.location.href = '/admin';
+                }
+                else{
+                    window.location.href = '/'
+                }    
             }
-
         }
     }
 

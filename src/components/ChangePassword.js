@@ -15,7 +15,7 @@ const ChangePassword = () => {
     setErrors(errs);
 
     if (Object.keys(errs).length === 0) {
-      const username = "Sheryy";
+      const username = "Mishel";
       const url = `http://localhost:4000/user/updateUser/${username}`;
       const result = await fetch(url, {
         method: "PUT",

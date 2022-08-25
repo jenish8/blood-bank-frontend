@@ -13,8 +13,7 @@ import Wallet from './components/Wallet';
 import D_Register from './components/D_Register';
 import { VerifyUser } from './components/verifyUser';
 import Otp from './components/Otp';
-import Login from './components/Login'
-
+import Login from './components/Login';
 
 import { ToastContainer, toast } from "react-toastify";
 
@@ -72,7 +71,9 @@ class App extends React.Component {
 
 					<Route path='/wallet' element={<Wallet />} />
 					<Route path='/otp' element={<Otp />} />
-					<Route path='/login' element={<Login />} />
+
+					<Route path='/login' element={<Login/>}/>
+
 					<Route path='/' element={
 						<>
 							<div className='App'>

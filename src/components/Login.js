@@ -1,32 +1,82 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link,Navigate } from "react-router-dom";
 import bloodcover from "../images/blood1.jpg"
+import "react-toastify"
+import { toast } from "react-toastify";
 
 
-const Login = () => {
+const Login = ({notify}) => {
 
-    let [email, setEmail] = useState("");
-    let [password, setPassword] = useState("");
+    const formInitialValue = {
+        username: "",
+        password: "",
+    } 
 
-    let [showValidation, setShowValidation] = useState(false);
+    const [values, setValues] = useState(formInitialValue)
+    const [errors, setErrors] = useState({});
 
-    // Login Data
-    const getLogindata = (e) => {
-        e.preventDefault();
-        console.log("Form Submitted");
-
-        if (email.length <= 0 || password.length<=0) {
-            setShowValidation(true);
-        }else{
-            setShowValidation(false)
-
-        }
-        console.log(`Email: ${email} Password: ${password}`);
+    const handleChange = (event) => {
+        setValues({
+            ...values,
+            [event.target.name]: event.target.value
+        })
     }
 
 
+    async function handleSubmit(event) {
+        event.preventDefault()
+        let errs = validateForm(values)
+        setErrors(errs)
 
-    return <div style={{ backgroundColor: "#f2f2f2", minHeight: "100vh" }}>
+        if (Object.keys(errs).length === 0) {
+            const userName = event.target.username.value;
+            const password = event.target.password.value;
+
+            let item = { userName, password }
+            console.log(item);
+            
+            let result = await fetch("http://localhost:4000/user/login", {
+                method: 'POST',
+                body: JSON.stringify(item),
+                headers: {
+                    "Content-Type": 'application/json',
+                    "Accept": 'application/json'
+                }
+            })
+            
+            if(result.status == 200){
+                result = await result.json();
+                console.log("token " + result.token);
+                console.log("message " + result.message);
+
+                if(result.userName == "Admin"){
+                    console.log(result.userName);
+                    window.location.href = '/admin';
+                }
+                else{
+                    sessionStorage.setItem("user",result.userName);
+                    window.location.href = '/'
+                }    
+            }
+            else{
+                toast("login unsucessfull")
+            }
+        }
+    }
+
+    const validateForm = (values) => {
+        let err = {}
+        if (!values.username) {
+            err.username = "Username is required."
+        }
+        if (!values.password) {
+            err.password = "Password is required."
+        }
+        return err
+    }
+
+
+    return <div style={{backgroundColor:"#ffcccb", minHeight:"100vh"}}>
         <div className="container">
             <div className="row justify-content-center my-4">
                 <div className="col-md-7 col-lg-5 shadow p-3" style={{ backgroundColor: "pink" }}>
@@ -39,35 +89,38 @@ const Login = () => {
                                 <h3 className="mb-4 h1">Sign in</h3>
                             </div>
                         </div>
-                        <form name="signin">
+                        <form onSubmit={handleSubmit} name="signin">
                             <div className="form-group my-3 text-start">
-                                <label className="form-control-placeholder">Email</label>
-                                <input required type="email" className="form-control"
-                                    name="email" value={email} onChange={(e) => { setEmail(e.target.value) }} />
-                               
+                                <label className="form-control-placeholder">Username</label>
+                                <input className={`form-control ${errors.username ? "is-invalid" : ""}  `}
+                                    name="username" value={values.username} onChange={handleChange} />
+                                {errors.username && <div className="alert-danger my-3 p-2">{errors.username}</div>}
+
                             </div>
 
                             <div className="form-group my-3 text-start">
                                 <label className="form-control-placeholder">Password</label>
-                                <input required type="password" className="form-control"
-                                    name="password" value={password} onChange={(e) => { setPassword(e.target.value) }} />
+                                <input type="password" className={`form-control ${errors.password ? "is-invalid" : ""}  `}
+                                    name="password" value={values.password} onChange={handleChange}  />
+                                    {errors.password && <div className="alert-danger my-3 p-2">{errors.password}</div>} 
                             </div>
-                            {showValidation && <h6 className="text-danger">Fields should not be empty</h6>}
                             <div className="form-group my-3">
-                                <button type="submit" onClick={getLogindata} className="form-control btn btn-primary rounded submit px-3">Sign
+                                <button type="submit" className="form-control btn btn-primary rounded submit px-3">Sign
                                     in</button>
                             </div>
                             <div className="form-group mt-5">
                                 <div className="w-100 text-center">
                                     <p>Not a member?
-                                        {" "}<Link data-toggle="tab" to="/log">Sign up</Link>
+                                        {" "}<Link data-toggle="tab" to="/register">Sign up</Link>
                                     </p>
                                 </div>
                             </div>
                             <div className="form-group mt-5">
                                 <div className="w-100 text-center">
-                                    <p>forget password
-                                        {" "}<Link data-toggle="tab" to=" ">click here</Link>
+
+                                    <p>Forget Password ?
+
+                                        {" "}<Link data-toggle="tab" to="/forgetpassword ">click here</Link>
                                     </p>
                                 </div>
                             </div>

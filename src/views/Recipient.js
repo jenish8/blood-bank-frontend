@@ -4,7 +4,7 @@ import moment from "moment";
 import AdminNavbar from "../components/Admin/Navbars/AdminNavbar";
 import Footer from "../components/Admin/Footer/Footer";
 import Sidebar from "../components/Admin/Sidebar/Sidebar";
-
+import { toast } from "react-toastify";
 import routes from "../routes.js";
 
 import sidebarImage from "../assets/img/sidebar-3.jpg";
@@ -37,7 +37,7 @@ function Recipient() {
       .then((res) => res.json())
       .then((result) => {
         result.forEach(obj=>{
-          obj.requestedDate = moment(obj.requestedDate).format('DD/MM/YY');
+          obj.createdAt = moment(obj.createdAt).format('DD/MM/YY');
           obj.supplyDate = moment(obj.supplyDate).format('DD/MM/YY');
         })
         setUserList(result);
@@ -74,7 +74,7 @@ function Recipient() {
 
     const res = await result.json();
     if(res.err)
-      console.log("Not in stock");
+      toast("Not in stock");
     else{
       setUserList(res);
       fetchData();
@@ -97,7 +97,7 @@ function Recipient() {
 
     const res = await result.json();
     res.forEach(obj=>{
-      obj.requestedDate = moment(obj.requestedDate).format('DD/MM/YY');
+      obj.createdAt = moment(obj.createdAt).format('DD/MM/YY');
       obj.supplyDate = moment(obj.supplyDate).format('DD/MM/YY');
     });    
     setUserList(res);
@@ -157,7 +157,7 @@ function Recipient() {
                                 <td>{row.username}</td>
                                 <td>{row.bloodGroup}</td>
                                 <td>{row.quantity}</td>
-                                <td>{row.requestedDate}</td>
+                                <td>{row.createdAt}</td>
                                 <td>{row.supplyDate}</td>
                                 
                                 <td><button type="button" class="btn btn-success" value={row._id} disabled={row.isAccepted} onClick={accept}>Accept</button></td>

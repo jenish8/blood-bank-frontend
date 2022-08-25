@@ -61,6 +61,7 @@ const Register = ({notify}) => {
 
             result = await result.json()
             console.log(result);
+            window.location.href='/login';
             // if(result.message === 'Record created successfully.'){
             //     notify("Account verification link has been sent to your mail.")
             // }

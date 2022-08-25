@@ -2,10 +2,13 @@ import React from "react";
 import bloodcover from "../images/blood1.jpg"
 import { makeStyles } from "@mui/styles"
 import { useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
+import "react-toastify"
+import { toast } from "react-toastify";
 
 import { Link } from 'react-router-dom';
 
-import moment from 'moment'
+import moment, { relativeTimeRounding } from 'moment'
 
 
 
@@ -14,6 +17,8 @@ function Appointment() {
 
     // const classes = useStyles();
     const username = sessionStorage.getItem("user");
+    const location = useLocation();
+
 
     const [appointmentDate, setappointmentDate] = useState("");
     const [errors,setErrors] = useState({});
@@ -37,7 +42,13 @@ function Appointment() {
         })
 
         const data = await result.json();
-        console.log("www" + data);
+        if(result.status==400){
+            toast("Already donated within 90 days.")
+        }
+        else{
+            toast("Appointment Booked.")
+            window.location.reload(false);
+        }
 
 
     }
@@ -49,6 +60,30 @@ function Appointment() {
         }
         return err;
     }
+
+    async function fetchform(){
+        console.log("Username:-"+username);
+        const url = `http://localhost:4000/user/find`;
+        const result = await fetch(url, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({
+                    username,
+                }),
+            })
+
+        const res = await result.json();
+        console.log(res);
+        if(res==null){
+            window.location.href='/donor/register';
+        }
+    }
+
+    React.useEffect(() => {
+        fetchform();
+      }, [location]);
 
     return <div style={{ backgroundColor: "#f2f2f2", minHeight: "100vh" }}>
         <div className="container">

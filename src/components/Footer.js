@@ -11,11 +11,11 @@ Heading,
 const Footer = () => {
 return (
 	<Box>
-	<h1 style={{ color: "green",
+	<h2 style={{ color: "green",
 				textAlign: "center",
 				marginTop: "-50px" }}>
-		blood bank Management system
-	</h1>
+		Blood Bank Management system
+	</h2><br/>
 	<Container>
 		<Row>
 		<Column>

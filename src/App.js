@@ -13,7 +13,9 @@ import Wallet from './components/Wallet';
 import D_Register from './components/D_Register';
 import { VerifyUser } from './components/verifyUser';
 import Otp from './components/Otp';
-import Login from './components/Login';
+import Login from './components/Login'
+import Home from './components/Home';
+
 
 import { ToastContainer, toast } from "react-toastify";
 
@@ -71,27 +73,8 @@ class App extends React.Component {
 
 					<Route path='/wallet' element={<Wallet />} />
 					<Route path='/otp' element={<Otp />} />
-
-					<Route path='/login' element={<Login/>}/>
-
-					<Route path='/' element={
-						<>
-							<div className='App'>
-								<Navbar color="primary"></Navbar>
-								<div className="container" id="brand">
-									<NavbarBrand>Daiict Blood bank</NavbarBrand>
-								</div>
-
-								<h1>Blood Bank Management System</h1>
-								<Menu places={this.state.places}>
-								</Menu>
-								<Footer />
-
-							</div>
-
-
-						</>
-					} />
+					<Route path='/login' element={<Login />} />
+					<Route path='/' element={<Home />} />
 				</Routes>
 				<Routes>
 				<Route path="/admin" element={<AdminLayout />} />

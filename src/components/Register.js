@@ -3,6 +3,7 @@ import validator from "validator";
 import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import bloodcover from "../images/blood1.jpg"
+import { toast } from "react-toastify";
 
 
 const Register = ({notify}) => {
@@ -166,12 +167,7 @@ const Register = ({notify}) => {
                               name="userName" value={values.userName} onChange={handleChange} />
                           {errors.userName && <div className="alert-danger my-3 p-2">{errors.userName}</div>}
                       </div>
-                      {/* <div className="form-group my-3 text-start">
-                          <label className="form-control-placeholder">Last Name</label>
-                          <input type="text" className={`form-control  `}
-                              name="lastName"  onChange={'#'} />
-                          {errors.lastName && <div className="alert-danger my-3 p-2">{errors.lastName}</div>}
-                      </div> */}
+                     
                       <div className="form-group my-3 text-start">
                           <label className="form-control-placeholder">Email</label>
                           <input type="email" className={`form-control ${errors.email ? "is-invalid" : ""} `}
@@ -199,29 +195,7 @@ const Register = ({notify}) => {
                               {errors.contactNumber && <div className="alert-danger my-3 p-2">{errors.contactNumber}
                               </div>}  
                               </div>
-                      {/* <div className="form-group my-3 text-start">
-                          <label className="form-control-placeholder">Date Of Birth</label>
-                          <input type="date" className={`form-control`} name="dob" />
-                      </div>
-                      <div className="form-group my-3 text-start">
-                          <label className="form-control-placeholder">Aadhar Number</label>
-                          <input type="number" className={`form-control `} name="aadharNumber"  />
-                      </div> */}
-                      {/* <div className="form-group my-3 text-start">
-                          <label className="form-control-placeholder">Profile Photo</label>
-                          <input type="file" accept="image/png, image/jpg, image/jpeg" className={`form-control ${errors.profile ? "is-invalid"
-                              : ""}`} name="profile" value={values.profile} onChange={handleChange} />
-                          {errors.profile && <div className="alert-danger my-3 p-2">{errors.profile}
-                          </div>}
-                      </div> */}
-                      {/* <div className="form-group my-3 text-start">
-                          <label className="form-control-placeholder">Gender</label>
-                          <br />
-                          <label>Male</label>
-                          <input type="radio" className={`ms-2  `} name="gender" value="male"   />
-                          <label className='ms-3'>Female</label>
-                          <input type="radio" className={`ms-2  `} name="gender" value="female" />
-                      </div> */}
+                      
                       <div className="form-group my-3 text-start">
                           <label className="form-control-placeholder">Address</label>
                           <textarea className={`form-control ${errors.address? "is-invalid" : ""}`} name="address" 

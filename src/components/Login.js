@@ -1,9 +1,11 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link,Navigate } from "react-router-dom";
 import bloodcover from "../images/blood1.jpg"
+import "react-toastify"
+import { toast } from "react-toastify";
 
 
-const Login = () => {
+const Login = ({notify}) => {
 
     const formInitialValue = {
         username: "",
@@ -46,15 +48,18 @@ const Login = () => {
                 result = await result.json();
                 console.log("token " + result.token);
                 console.log("message " + result.message);
-                sessionStorage.setItem("token",result.token);
-                
+
                 if(result.userName == "Admin"){
                     console.log(result.userName);
                     window.location.href = '/admin';
                 }
                 else{
+                    sessionStorage.setItem("user",result.userName);
                     window.location.href = '/'
                 }    
+            }
+            else{
+                toast("login unsucessfull")
             }
         }
     }
@@ -106,7 +111,7 @@ const Login = () => {
                             <div className="form-group mt-5">
                                 <div className="w-100 text-center">
                                     <p>Not a member?
-                                        {" "}<Link data-toggle="tab" to="/log">Sign up</Link>
+                                        {" "}<Link data-toggle="tab" to="/register">Sign up</Link>
                                     </p>
                                 </div>
                             </div>
@@ -115,7 +120,7 @@ const Login = () => {
 
                                     <p>Forget Password ?
 
-                                        {" "}<Link data-toggle="tab" to=" ">click here</Link>
+                                        {" "}<Link data-toggle="tab" to="/forgetpassword ">click here</Link>
                                     </p>
                                 </div>
                             </div>

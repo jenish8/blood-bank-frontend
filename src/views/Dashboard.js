@@ -80,9 +80,11 @@ function Dashboard() {
   }
 
   async function fetchMonthlyDonations() {
+    console.log("MODO");
     await fetch("http://localhost:4000/user/monthly-donations")
       .then((res) => res.json())
       .then((result) => {
+        console.log(result);
         setMoDo(result);
       })
   }
@@ -329,18 +331,18 @@ function Dashboard() {
                       ],
                       series: [
                         [
-                          412,
-                          243,
-                          280,
-                          580,
-                          453,
-                          353,
-                          300,
-                          364,
-                          368,
-                          410,
-                          636,
-                          695,
+                          userMoDo[0],
+                          userMoDo[1],
+                          userMoDo[2],
+                          userMoDo[3],
+                          userMoDo[4],
+                          userMoDo[5],
+                          userMoDo[6],
+                          userMoDo[7],
+                          userMoDo[8],
+                          userMoDo[9],
+                          userMoDo[10],
+                          userMoDo[11],
                         ],
                       ]
                     }}

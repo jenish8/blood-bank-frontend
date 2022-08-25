@@ -40,7 +40,7 @@ const Navigation = () => {
              (
               <ul className="navbar-nav ms-auto">
                 <li className="nav-item">
-                <Link className="nav-link px-4" to="/register">
+                <Link className="nav-link px-4" to="/programdrive">
                     Arrange Program Drive
                   </Link>
                 </li>

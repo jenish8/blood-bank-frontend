@@ -74,7 +74,7 @@ function ProgramDrive() {
         })
 
     const res = await result.json();
-    console.log(res);
+    console.log(res + id);
     setUserList(res);
     fetchData();
   }
@@ -98,27 +98,6 @@ function ProgramDrive() {
       obj.programDate = moment(obj.programDate).format('DD/MM/YY')
     })
     setUserList(res);
-  }
-
-  async function fetchName(contactNumber) {
-    
-    const url = `http://localhost:4000/supervisor/all`;
-
-    const result = await fetch(url, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({
-                contactNumber,
-            }),
-        })
-
-    const superName = await result.json();
-    console.log(superName);
-    sname=superName.supervisorName;
-    setName(sname);
-    console.log(name);
   }
 
   React.useEffect(() => {
@@ -176,8 +155,7 @@ function ProgramDrive() {
                                 <td>{row._id}</td>
                                 <td>{row.programName}</td>
                                 <td>{row.programDate}</td>
-                                <td onLoad={fetchName(row.contactNumber)} hidden="hidden"></td>
-                                <td>{name}</td>
+                                <td>{row.supervisorName}</td>
                                 <td>{row.contactNumber}</td>
                                 <td><button type="button" class="btn btn-success" disabled={row.isAccepted} value={row._id} onClick={accept}>Accept</button></td>
                                 <td><button type="button" class="btn btn-danger" disabled={row.isAccepted} value={row._id} onClick={reject}>Reject</button></td>

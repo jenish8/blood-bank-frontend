@@ -6,6 +6,8 @@ import { toast } from "react-toastify";
 
 
 const Login = ({notify}) => {
+    sessionStorage.setItem('user',"");
+    console.log("username:-"+sessionStorage.getItem('user'));
 
     const formInitialValue = {
         username: "",

@@ -21,16 +21,14 @@ import {
 } from "react-bootstrap";
 
 function Home() {
-  
+  console.log("username:-"+sessionStorage.getItem('user'));
   return (
     <>
       <div className="wrapper">
-        <div className="main-panel" >
           <Navigation/>
-						<Menu places={this.state.places}>
-								</Menu>
+						{/* <Menu places={this.state.places}>
+								</Menu> */}
 					<Footer />
-        </div>
       </div>
     </>
   );

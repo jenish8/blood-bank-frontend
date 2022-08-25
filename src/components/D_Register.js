@@ -41,7 +41,7 @@ const D_Register = () => {
             console.log("fn ");
             const gender = event.target.gender.value;
             const bloodGroup = event.target.bloodGroup.value;
-            const username="jen_"
+            const username=sessionStorage.getItem('user');
             let item = { username,dateOfBirth,aadharNumber,gender,bloodGroup }
             console.warn(item)
             let result = await fetch("http://localhost:4000/user/d_register", {
@@ -55,6 +55,7 @@ const D_Register = () => {
 
             result = await result.json()
             console.log(result);
+            window.location.href='/appointment';
             // if(result.message === 'Record created successfully.'){
             //     notify("Account verification link has been sent to your mail.")
             // }
@@ -244,13 +245,6 @@ const D_Register = () => {
                       <div className="form-group my-3">
                           <button type="submit" className="form-control btn btn-primary rounded submit px-3" >Sign
                               Up</button>
-                      </div>
-                      <div className="form-group mt-5">
-                          <div className="w-100 text-center">
-                              <p>Already a member?
-                                  {" "}<Link data-toggle="tab" to="/login">Sign In</Link>
-                              </p>
-                          </div>
                       </div>
                       </form> 
               </div>

@@ -1,74 +1,145 @@
 import React from "react";
 import validator from "validator";
 import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
 import bloodcover from "../images/blood1.jpg"
+import { toast } from "react-toastify";
 
 
 const R_Register = () => {
     // document.title = "Registration- BloodBank.com"
 
-    // const formInitialValue = {
-    //     firstName: "",
-    //     lastName: "",
-    //     email: "",
-    //     password: "",
-    //     confirmPassword: "",
-    //     mobileNumber: "",
-    //     dob: "",
-    //     aadharNumber: "",
-    //     gender: "",
-    //     address: ""
-    // }
-    // const [values, setValues] = useState(formInitialValue)
-    // const [sucessMessage, setMessage] = useState("")
-    // const [errors, setErrors] = useState({})
-    // const [dataIsCorrect, setDataIsCorrect] = useState(false)
+    const username=sessionStorage.getItem("user")
+    const formInitialValue = {
+        bloodGroup: "",
+        quantity:"",
+        supplyDate:""
+    }
+    const [values, setValues] = useState(formInitialValue)
+    const [sucessMessage, setMessage] = useState("")
+    const [errors, setErrors] = useState({})
+    const [dataIsCorrect, setDataIsCorrect] = useState(false)
 
-    // const handleChange = (event) => {
-    //     //console.log(event.target.value, event.target)
-    //     setValues({
-    //         ...values,
-    //         [event.target.name]: event.target.value
-    //     })
-    // }
+    const handleChange = (event) => {
+        //console.log(event.target.value, event.target)
+        setValues({
+            ...values,
+            [event.target.name]: event.target.value
+        })
+    }
 
-    // async function handleSubmit(event) {
-    //     //console.log("data ", event.target);
-    //     event.preventDefault()
-    //     // setErrors(validateForm(values))
-    //     let errs = validateForm(values)
-    //     // setDataIsCorrect(true)
-    //     setErrors(errs)
+    async function handleSubmit(event) {
+        //console.log("data ", event.target);
+        event.preventDefault()
+        // setErrors(validateForm(values))
+        let errs = validateForm(values)
+        // setDataIsCorrect(true)
+        setErrors(errs)
 
-    //     if(Object.keys(errs).length===0){
-    //         const firstName = event.target.firstName.value;
-    //         //console.log("fn ",firstName);
-    //         const lastName = event.target.lastName.value;
-    //         const dob = event.target.dob.value;
-    //         const email = event.target.email.value;
-    //         const mobileNumber = event.target.mobileNumber.value;
-    //         const password = event.target.password.value;
-    //         const aadharNumber = event.target.aadharNumber.value;
-    //         const address = event.target.address.value;
-    //         const gender = event.target.gender.value;
+        if(Object.keys(errs).length===0){
+            const bloodGroup = event.target.bloodGroup.value;
+            const quantity = event.target.quantity.value;
+            const supplyDate = event.target.supplyDate.value;
+            
+            //console.log("fn ",firstName);
+            // const lastName = event.target.lastName.value;
+            // const dob = event.target.dob.value;
+            // const email = event.target.email.value;
+            // const mobileNumber = event.target.mobileNumber.value;
+            // const password = event.target.password.value;
+            // const aadharNumber = event.target.aadharNumber.value;
+            // const address = event.target.address.value;
+            // const gender = event.target.gender.value;
 
-    //         let item = { firstName, lastName, dob, email, mobileNumber, password, aadharNumber, address, gender }
-    //         // console.warn(item)
-    //         let result = await fetch("https://auctionpointbackend.herokuapp.com/user/register", {
-    //             method: 'POST',
-    //             body: JSON.stringify(item),
-    //             headers: {
-    //                 "Content-Type": 'application/json',
-    //                 "Accept": 'application/json'
-    //             }
-    //         })
+            let item = { username,bloodGroup, quantity ,supplyDate}
+            // console.warn(item)
+            let result = await fetch("http://localhost:4000/user/r_register", {
+                method: 'POST',
+                body: JSON.stringify(item),
+                headers: {
+                    "Content-Type": 'application/json',
+                    "Accept": 'application/json'
+                }
+            })
 
-    //         result = await result.json()
-    //         if(result.message === 'Record created successfully.'){
-    //             notify("Account verification link has been sent to your mail.")
-    //         }
-    //     }
-    // }
+            result = await result.json()
+            toast(result);
+            // if(result.message === 'Record created successfully.'){
+            //     notify("Account verification link has been sent to your mail.")
+            // }
+        }
+    }
+
+    const validateForm = (values) => {
+        let err = {}
+        if (!values.bloodGroup) {
+            err.bloodGroup = "Blood Group is required."
+        }
+        if (!values.supplyDate) {
+            err.supplyDate = "SupplyDate is required."
+        }
+        // if (!/\S+@\S+\.\S+/.test(values.email)) {
+        //     err.email = "Email is invalid"
+        // }
+        if (!values.quantity) {
+            err.quantity = "Quantity is required."
+        }
+
+        // if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9]).{8,20}$/.test(values.password)) {
+        //     err.password = `At least 1 Uppercase. At least 1 Lowercase. At least 1 Number. Min 8 chars and Max 20 chars`
+        // }
+
+        // if (!values.gender) {
+        //     err.gender = "Gender is required."
+        // }
+        // if (!values.bloodGroup) {
+        //     err.bloodGroup = "Blood Group is required."
+        //}
+        // if (values.password !== values.confirmPassword) {
+        //     err.confirmPassword = "Password and confirm password not matching."
+        // }
+
+        // if (values.contactNumber.length !== 10) {
+        //     err.contactNumber = "Contact number must be of 10 digit."
+        // }
+
+        // if (!values.contactNumber) {
+        //     err.contactNumber = "Contact number is required."
+        // }
+
+        // if (values.aadharNumber.length !== 12) {
+        //     err.aadharNumber = "Aadhar number must be of 12 digit."
+        // }
+        // if (!values.aadharNumber) {
+        //     err.aadharNumber = "Aadhar number is required."
+        // }
+
+        // if (!values.gender) {
+        //     err.gender = "Gender is required."
+        // }
+
+        // if (!validator.isDate(values.dob)) {
+        //     err.dob = "Invalid date."
+        // }
+
+        // if (!values.dob) {
+        //     err.dob = "Date Of Birth is required."
+        // }
+
+        // if (!values.profile.match(/\.(jpg|jpeg|png)$/)) {
+        //     err.profile = "Please select an image file only."
+        // }
+
+        // if (!values.profile) {
+        //     err.profile = "Please select an image file."
+        // }
+
+
+        // if (!values.address) {
+        //     err.address = "Address is required."
+        // }
+        return err
+    }
     
   return  <div style={{backgroundColor:"#f2f2f2", minHeight:"100vh"}}>
   <div className="container">
@@ -80,13 +151,14 @@ const R_Register = () => {
               <div className="p-3">
                   <div className="d-flex">
                       <div className="w-100">
-                          <h3 className="mb-4 h1">Recipient : Sign Up</h3>
+                          <h3 className="mb-4 h1">Recipient : Request Blood</h3>
                       </div>
                   </div>
-                  <form onSubmit={'#'} name="signup">
+                  <form onSubmit={handleSubmit} name="signup">
                   <div className="form-group my-3 text start">
                             <label className="form-control-placeholder">Blood Group</label>
-                            <select className="{`form-control`}" name="bloodGroup">
+                            <select  value={values.bloodGroup}
+                            className={`form-control ${errors.bloodGroup ? "is-invalid" : ""} `} onChange={handleChange} name="bloodGroup">
                                 <option>A+</option>
                                 <option>A-</option>
                                 <option>B+</option>
@@ -96,7 +168,8 @@ const R_Register = () => {
                                 <option>O+</option>
                                 <option>O-</option>
                             </select>
-                           
+                            {errors.bloodGroup && <div className="alert-danger my-3 p-2">{errors.bloodGroup}
+                        </div>}
                         </div>
                       {/* <div className="form-group my-3 text-start">
                           <label className="form-control-placeholder">Name</label>
@@ -135,15 +208,22 @@ const R_Register = () => {
                           <input type="contactNumber" className={`form-control `}
                               name="contactNumber"  />
                       </div> */}
+                       <div className="form-group my-3 text-start">
+                          <label className="form-control-placeholder">Quantity</label>
+                          <input type="text"  value={values.quantity}
+                          className={`form-control ${errors.quantity ? "is-invalid" : ""} `} onChange={handleChange} name="quantity" />
+                            {errors.quantity && <div className="alert-danger my-3 p-2">{errors.quantity}
+                        </div>}
+                      </div>
 
                       <div className="form-group my-3 text-start">
                           <label className="form-control-placeholder">Supply Date</label>
-                          <input type="date" className={`form-control`} name="supplyDate" />
+                          <input type="date" value={values.supplyDate}
+                            className={`form-control ${errors.supplyDate ? "is-invalid" : ""} `} onChange={handleChange} name="supplyDate" />
+                            {errors.supplyDate && <div className="alert-danger my-3 p-2">{errors.supplyDate}
+                        </div>}
                       </div>
-                      <div className="form-group my-3 text-start">
-                          <label className="form-control-placeholder">Quantity</label>
-                          <input type="text" className={`form-control `} name="quantity"  />
-                      </div>
+                     
                       {/* <div className="form-group my-3 text-start">
                           <label className="form-control-placeholder">Profile Photo</label>
                           <input type="file" accept="image/png, image/jpg, image/jpeg" className={`form-control ${errors.profile ? "is-invalid"
@@ -166,16 +246,15 @@ const R_Register = () => {
                       </div> */}
                        
                       <div className="form-group my-3">
-                          <button type="submit" className="form-control btn btn-primary rounded submit px-3">Sign
-                              Up</button>
+                          <button type="submit" className="form-control btn btn-primary rounded submit px-3">Request Blood</button>
                       </div>
-                      <div className="form-group mt-5">
+                      {/* <div className="form-group mt-5">
                           <div className="w-100 text-center">
                               <p>Not a member?
                                   {" "}<Link data-toggle="tab" to="/login">Sign In</Link>
                               </p>
                           </div>
-                      </div>
+                      </div> */}
                       </form> 
               </div>
           </div>

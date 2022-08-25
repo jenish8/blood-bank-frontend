@@ -173,7 +173,7 @@ function Dashboard() {
                       <Modal.Body>
                         <Card className="card-plain table-plain-bg">
                           <Card.Header>
-                            <Card.Title as="h4">User Database</Card.Title>
+                            <Card.Title as="h4">Pre-requesites Stock</Card.Title>
                           </Card.Header>
                           <Card.Body className="table-full-width table-responsive px-0">
                             <Table className="table-hover">
@@ -331,7 +331,6 @@ function Dashboard() {
                       ],
                       series: [
                         [
-                          userMoDo[0],
                           userMoDo[1],
                           userMoDo[2],
                           userMoDo[3],
@@ -343,6 +342,7 @@ function Dashboard() {
                           userMoDo[9],
                           userMoDo[10],
                           userMoDo[11],
+                          userMoDo[12],
                         ],
                       ]
                     }}

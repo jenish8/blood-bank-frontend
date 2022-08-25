@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import "react-toastify"
 import { toast } from "react-toastify";
+import Navigation from "../components/Navigation"
 
 import { Link } from 'react-router-dom';
 
@@ -85,7 +86,8 @@ function Appointment() {
         fetchform();
       }, [location]);
 
-    return <div style={{ backgroundColor: "#f2f2f2", minHeight: "100vh" }}>
+    return <div style={{ backgroundColor: "#ffcccb", minHeight: "100vh" }}>
+        <Navigation/>
         <div className="container">
             <div className="row justify-content-center my-4">
                 <div className="col-md-7 col-lg-5 shadow p-3" style={{ backgroundColor: "pink" }}>

@@ -3,6 +3,8 @@ import bloodcover from "../images/blood1.jpg"
 import { useState, useEffect } from "react";
 import moment from "moment";
 import { toast } from "react-toastify";
+import Navigation from "../components/Navigation";
+
 
 
 
@@ -80,6 +82,7 @@ const Programdrive = () => {
 
 
     return <div style={{ backgroundColor: "#ffcccb", minHeight: "100vh" }}>
+        <Navigation/>
         <div className="container">
             <div className="row justify-content-center my-4">
                 <div className="col-md-7 col-lg-5 shadow p-3" style={{ backgroundColor: "pink" }}>

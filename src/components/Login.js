@@ -57,7 +57,7 @@ const Login = ({notify}) => {
                 }
                 else{
                     sessionStorage.setItem("user",result.userName);
-                    window.location.href = '/'
+                    window.location.href = '/home'
                 }    
             }
             else{

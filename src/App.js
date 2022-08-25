@@ -73,8 +73,8 @@ class App extends React.Component {
 
 					<Route path='/wallet' element={<Wallet />} />
 					<Route path='/otp' element={<Otp />} />
-					<Route path='/login' element={<Login />} />
-					<Route path='/' element={<Home />} />
+					<Route path='/' element={<Login />} />
+					<Route path='/home' element={<Home />} />
 				</Routes>
 				<Routes>
 				<Route path="/admin" element={<AdminLayout />} />

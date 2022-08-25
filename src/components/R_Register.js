@@ -4,6 +4,7 @@ import { Link } from "react-router-dom";
 import { useEffect, useState } from "react";
 import bloodcover from "../images/blood1.jpg"
 import { toast } from "react-toastify";
+import Navigation from "../components/Navigation";
 
 
 const R_Register = () => {
@@ -141,7 +142,8 @@ const R_Register = () => {
         return err
     }
     
-  return  <div style={{backgroundColor:"#f2f2f2", minHeight:"100vh"}}>
+  return  <div style={{ backgroundColor: "#ffcccb", minHeight: "100vh" }}>
+      <Navigation/>
   <div className="container">
       <div className="row justify-content-center my-4">
           <div className="col-md-7 col-lg-5 shadow p-3" style={{backgroundColor:"pink"}}>

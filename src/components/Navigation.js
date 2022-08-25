@@ -5,7 +5,7 @@ import logo from "./images/bloodbank_logo.png"
 const Navigation = () => {
   const navigate = useNavigate();
   const location = useLocation();
-
+  const username=sessionStorage.getItem('user');
   const LogOut = () => {
     sessionStorage.removeItem("user");
     navigate("/login");
@@ -15,7 +15,7 @@ const Navigation = () => {
     <>
       <nav className="navbar navbar-expand-lg navbar-dark bg-dark py-3 px-8 sticky-top">
         <div className="container-fluid">
-          <Link className="navbar-brand d-flex align-items-center" to="/">
+          <Link className="navbar-brand d-flex align-items-center" to="/home">
             <img
               src={logo}
               alt=""

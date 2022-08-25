@@ -34,9 +34,9 @@ function Home() {
       .then((res) => res.json())
       .then((result) => {
         console.log(result);
-        // result.forEach(obj=>{
-        //   obj.programDate = moment(obj.programDate).format('DD/MM/YY');
-        // })
+        result.forEach(obj=>{
+          obj.programDate = moment(obj.programDate).format('DD/MM/YY');
+        })
         console.log(typeof(result))
         setUserList(result);
         console.log("userList  "+ userList);
@@ -52,20 +52,30 @@ function Home() {
       <div className="wrapper">
         <Navigation />
         <br></br>
-        <Container fluid>
+        <Container>
           <Table className="table-hover">
-            <thead>
-              <tr>
-                <th className="border-0">Program Name</th>
-                <th className="border-0">Program Date</th>
-              </tr>
-            </thead>
+            <h1>
+              Upcoming program Drives  
+            </h1><br/><br/>
             <tbody>
               {userList && userList.map(row => {
                 return (
                   <tr key={row_count}>
-                    <td>{row.programName}</td>
-                    <td>{row.programDate}</td>
+                    <Card className="card-stats" style={{ backgroundColor: "#ffcccb"}}>
+              <Card.Body >
+                  <Col xs="8">
+                    <div className="icon-big text-left icon-warning">
+                      <i className="nc-icon nc-favourite-28 text-danger"></i>
+                    </div>
+                  </Col>
+                  <Col xs="8">
+                    <div className="numbers">
+                      <Card.Title style={{fontWeight:"bolder",fontSize:"20px"}}>Program Name: {row.programName}</Card.Title>
+                      <Card.Title style={{fontWeight:"bolder",fontSize:"20px"}}>Program Date: {row.programDate}</Card.Title>
+                    </div>
+                  </Col>
+              </Card.Body>
+            </Card>
                     </tr>
                 );
               })}
